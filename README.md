@@ -30,17 +30,17 @@ A smart travel planning assistant that helps you plan your perfect trip with AI-
 ### Choose Destination
 ![Choose Destination](./screenshots/choose_destination.png)
 
-### Choose Travelers
-![Choose Travelers](./screenshots/choose_travelers.png)
-
 ### Choose Date
 ![Choose Date](./screenshots/choose_date.png)
 
-### Travel Plan Overview
-![Travel Plan](./screenshots/travel_plan.png)
+### Choose Travelers
+![Choose Travelers](./screenshots/choose_travelers.png)
 
 ### Budget
 ![Budget](./screenshots/budger.png)
+
+### Travel Plan Overview
+![Travel Plan](./screenshots/travel_plan.png)
 
 ### Result Overview
 ![Result Overview](./screenshots/result_overview.png)
