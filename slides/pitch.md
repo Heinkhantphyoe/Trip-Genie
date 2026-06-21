@@ -1,6 +1,8 @@
 ---
+marp: true
 title: TripGenie — AI-Powered Travel Planning
 duration: 20
+auto-advance: 20
 ---
 
 # TripGenie ✈️
@@ -67,7 +69,5 @@ Simple 5-step flow from idea to complete plan.
 - Collaborative trip planning
 
 **Try it now:** `npm run dev`
-
----
 
 *Built with React 19, Vite 8, and Tailwind CSS 4*
