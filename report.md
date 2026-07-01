@@ -9,6 +9,32 @@ slides_url: slides/pitch.md
 
 I used a project-based approach, building TripGenie incrementally from a Vite React scaffold into a full travel planning app. I committed at each milestone—setting up the UI shell, wiring up context and hooks, adding agent definitions, and implementing slash commands. Claude Code helped me scaffold components, define the agent/skill architecture, and push to GitHub.
 
+## Screenshoots
+
+### Home Page
+![Home Page](./screenshots/home.png)
+
+### Choose Destination
+![Choose Destination](./screenshots/choose_destination.png)
+
+### Choose Date
+![Choose Date](./screenshots/choose_date.png)
+
+### Choose Travelers
+![Choose Travelers](./screenshots/choose_travelers.png)
+
+### Budget
+![Budget](./screenshots/budger.png)
+
+### Travel Plan Overview
+![Travel Plan](./screenshots/travel_plan.png)
+
+### Result Overview
+![Result Overview](./screenshots/result_overview.png)
+
+### Tips & Useful Phrases
+![Tips and Useful Phrases](./screenshots/tips_and_userfulPhrases.png)
+
 ## Evidence — Claude Code usage
 
 ### MCP
