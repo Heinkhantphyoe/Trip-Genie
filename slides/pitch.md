@@ -70,8 +70,4 @@ Simple 5-step flow from idea to complete plan.
 
 **Try it now:** `npm run dev`
 
-<<<<<<< Updated upstream
 *Built with React 19, Vite 8, and Tailwind CSS 4*
-=======
-*Built with React 19, Vite 8, and Tailwind CSS 4*
->>>>>>> Stashed changes
