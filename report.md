@@ -12,29 +12,28 @@ I used a project-based approach, building TripGenie incrementally from a Vite Re
 ## Screenshoots
 
 ### Home Page
-![Home Page](./screenshots/home.png)
+![home](https://github.com/Heinkhantphyoe/Trip-Genie/blob/main/screenshots/home.png)
 
 ### Choose Destination
-![Choose Destination](./screenshots/choose_destination.png)
+![choose_destination](https://github.com/Heinkhantphyoe/Trip-Genie/blob/main/screenshots/choose_destination.png)
 
 ### Choose Date
-![Choose Date](./screenshots/choose_date.png)
+![choose_date](https://github.com/Heinkhantphyoe/Trip-Genie/blob/main/screenshots/choose_date.png)
 
 ### Choose Travelers
-![Choose Travelers](./screenshots/choose_travelers.png)
+![choose_travelers](https://github.com/Heinkhantphyoe/Trip-Genie/blob/main/screenshots/choose_travelers.png)
 
 ### Budget
-![Budget](./screenshots/budger.png)
+![budget](https://github.com/Heinkhantphyoe/Trip-Genie/blob/main/screenshots/budget.png)
 
-### Travel Plan Overview
-![Travel Plan](./screenshots/travel_plan.png)
+### Travel Plan
+![travel_plan](https://github.com/Heinkhantphyoe/Trip-Genie/blob/main/screenshots/travel_plan.png)
 
 ### Result Overview
-![Result Overview](./screenshots/result_overview.png)
+![result_overview](https://github.com/Heinkhantphyoe/Trip-Genie/blob/main/screenshots/result_overview.png)
 
-### Tips & Useful Phrases
-![Tips and Useful Phrases](./screenshots/tips_and_userfulPhrases.png)
-
+### Tips and Useful Phrases
+![tips_and_userfulPhrases](https://github.com/Heinkhantphyoe/Trip-Genie/blob/main/screenshots/tips_and_userfulPhrases.png)
 ## Evidence — Claude Code usage
 
 ### MCP
