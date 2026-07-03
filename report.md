@@ -12,28 +12,29 @@ I used a project-based approach, building TripGenie incrementally from a Vite Re
 ## Screenshoots
 
 ### Home Page
-![home](https://github.com/Heinkhantphyoe/Trip-Genie/blob/main/screenshots/home.png)
+![Home Page](https://raw.githubusercontent.com/Heinkhantphyoe/Trip-Genie/main/screenshots/home.png)
 
 ### Choose Destination
-![choose_destination](https://github.com/Heinkhantphyoe/Trip-Genie/blob/main/screenshots/choose_destination.png)
+![Choose Destination](https://raw.githubusercontent.com/Heinkhantphyoe/Trip-Genie/main/screenshots/choose_destination.png)
 
 ### Choose Date
-![choose_date](https://github.com/Heinkhantphyoe/Trip-Genie/blob/main/screenshots/choose_date.png)
+![Choose Date](https://raw.githubusercontent.com/Heinkhantphyoe/Trip-Genie/main/screenshots/choose_date.png)
 
 ### Choose Travelers
-![choose_travelers](https://github.com/Heinkhantphyoe/Trip-Genie/blob/main/screenshots/choose_travelers.png)
+![Choose Travelers](https://raw.githubusercontent.com/Heinkhantphyoe/Trip-Genie/main/screenshots/choose_travelers.png)
 
 ### Budget
-![budget](https://github.com/Heinkhantphyoe/Trip-Genie/blob/main/screenshots/budget.png)
+![Budget](https://raw.githubusercontent.com/Heinkhantphyoe/Trip-Genie/main/screenshots/budget.png)
 
-### Travel Plan
-![travel_plan](https://github.com/Heinkhantphyoe/Trip-Genie/blob/main/screenshots/travel_plan.png)
+### Travel Plan Overview
+![Travel Plan](https://raw.githubusercontent.com/Heinkhantphyoe/Trip-Genie/main/screenshots/travel_plan.png)
 
 ### Result Overview
-![result_overview](https://github.com/Heinkhantphyoe/Trip-Genie/blob/main/screenshots/result_overview.png)
+![Result Overview](https://raw.githubusercontent.com/Heinkhantphyoe/Trip-Genie/main/screenshots/result_overview.png)
 
-### Tips and Useful Phrases
-![tips_and_userfulPhrases](https://github.com/Heinkhantphyoe/Trip-Genie/blob/main/screenshots/tips_and_userfulPhrases.png)
+### Tips & Useful Phrases
+![Tips and Useful Phrases](https://raw.githubusercontent.com/Heinkhantphyoe/Trip-Genie/main/screenshots/tips_and_userfulPhrases.png)
+
 ## Evidence — Claude Code usage
 
 ### MCP
