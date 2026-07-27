@@ -1,4 +1,7 @@
+import { Wallet, PiggyBank, Crown } from 'lucide-react'
 import { BUDGET_LEVELS } from '../../utils/constants'
+
+const BUDGET_ICONS = { budget: PiggyBank, 'mid-range': Wallet, luxury: Crown }
 
 export default function BudgetSlider({ value, onChange }) {
   return (
@@ -7,27 +10,30 @@ export default function BudgetSlider({ value, onChange }) {
         What's your budget?
       </label>
       <div className="grid grid-cols-3 gap-3">
-        {BUDGET_LEVELS.map(level => (
-          <button
-            key={level.id}
-            type="button"
-            onClick={() => onChange(level.id)}
-            className={`
-              p-4 rounded-xl border-2 transition-all duration-200 cursor-pointer text-center
-              active:scale-[0.97]
-              ${value === level.id
-                ? 'border-primary bg-primary-light shadow-md'
-                : 'border-border bg-surface hover:border-primary/40'
-              }
-            `}
-          >
-            <span className="text-2xl block mb-2">{level.icon}</span>
-            <span className={`block font-semibold text-sm ${value === level.id ? 'text-primary' : 'text-text-heading'}`}>
-              {level.label}
-            </span>
-            <span className="block text-xs text-text-muted mt-1">{level.description}</span>
-          </button>
-        ))}
+        {BUDGET_LEVELS.map(level => {
+          const Icon = BUDGET_ICONS[level.id]
+          return (
+            <button
+              key={level.id}
+              type="button"
+              onClick={() => onChange(level.id)}
+              className={`
+                p-4 rounded-xl border-2 transition-all duration-200 cursor-pointer text-center
+                active:scale-[0.97]
+                ${value === level.id
+                  ? 'border-primary bg-primary-light shadow-md'
+                  : 'border-border bg-surface hover:border-primary/40'
+                }
+              `}
+            >
+              <Icon className={`w-7 h-7 mx-auto mb-2 ${value === level.id ? 'text-primary' : 'text-text-muted'}`} strokeWidth={1.5} />
+              <span className={`block font-semibold text-sm ${value === level.id ? 'text-primary' : 'text-text-heading'}`}>
+                {level.label}
+              </span>
+              <span className="block text-xs text-text-muted mt-1">{level.description}</span>
+            </button>
+          )
+        })}
       </div>
     </div>
   )

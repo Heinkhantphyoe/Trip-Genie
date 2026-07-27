@@ -1,24 +1,24 @@
 export const TRAVEL_STYLES = [
-  { id: 'relaxed', label: 'Relaxed', icon: '🏖️' },
-  { id: 'balanced', label: 'Balanced', icon: '⚖️' },
-  { id: 'packed', label: 'Packed', icon: '🏃' },
+  { id: 'relaxed', label: 'Relaxed' },
+  { id: 'balanced', label: 'Balanced' },
+  { id: 'packed', label: 'Packed' },
 ]
 
 export const INTERESTS = [
-  { id: 'beach', label: 'Beach', icon: '🏖️' },
-  { id: 'culture', label: 'Culture', icon: '🏛️' },
-  { id: 'food', label: 'Food', icon: '🍜' },
-  { id: 'adventure', label: 'Adventure', icon: '🧗' },
-  { id: 'nightlife', label: 'Nightlife', icon: '🌙' },
-  { id: 'nature', label: 'Nature', icon: '🌿' },
-  { id: 'shopping', label: 'Shopping', icon: '🛍️' },
-  { id: 'history', label: 'History', icon: '🏰' },
+  { id: 'beach', label: 'Beach' },
+  { id: 'culture', label: 'Culture' },
+  { id: 'food', label: 'Food' },
+  { id: 'adventure', label: 'Adventure' },
+  { id: 'nightlife', label: 'Nightlife' },
+  { id: 'nature', label: 'Nature' },
+  { id: 'shopping', label: 'Shopping' },
+  { id: 'history', label: 'History' },
 ]
 
 export const BUDGET_LEVELS = [
-  { id: 'budget', label: 'Budget', description: 'Hostels, street food, public transit', icon: '💰' },
-  { id: 'mid-range', label: 'Mid-Range', description: 'Hotels, restaurants, some activities', icon: '💰💰' },
-  { id: 'luxury', label: 'Luxury', description: 'Resorts, fine dining, premium experiences', icon: '💰💰💰' },
+  { id: 'budget', label: 'Budget', description: 'Hostels, street food, public transit' },
+  { id: 'mid-range', label: 'Mid-Range', description: 'Hotels, restaurants, some activities' },
+  { id: 'luxury', label: 'Luxury', description: 'Resorts, fine dining, premium experiences' },
 ]
 
 export const API_URLS = {

@@ -1,19 +1,22 @@
+import { Plane, Building2, Ticket, UtensilsCrossed, Backpack, Lightbulb, Check } from 'lucide-react'
 import Card from '../ui/Card'
 import { formatCurrency } from '../../utils/format'
 
 const CATEGORIES = [
-  { key: 'flights', label: 'Flights', icon: '✈️', color: 'bg-indigo-500' },
-  { key: 'accommodation', label: 'Accommodation', icon: '🏨', color: 'bg-emerald-500' },
-  { key: 'activities', label: 'Activities', icon: '🎟️', color: 'bg-amber-500' },
-  { key: 'food', label: 'Food & Drink', icon: '🍜', color: 'bg-red-500' },
-  { key: 'miscellaneous', label: 'Miscellaneous', icon: '🎒', color: 'bg-slate-500' },
+  { key: 'flights', label: 'Flights', icon: Plane, color: 'bg-indigo-500' },
+  { key: 'accommodation', label: 'Accommodation', icon: Building2, color: 'bg-emerald-500' },
+  { key: 'activities', label: 'Activities', icon: Ticket, color: 'bg-amber-500' },
+  { key: 'food', label: 'Food & Drink', icon: UtensilsCrossed, color: 'bg-red-500' },
+  { key: 'miscellaneous', label: 'Miscellaneous', icon: Backpack, color: 'bg-slate-500' },
 ]
 
 export default function BudgetTab({ budget }) {
   if (!budget) {
     return (
       <div className="text-center py-12">
-        <span className="text-5xl block mb-4">💰</span>
+        <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-primary/10 text-primary mb-4">
+          <Lightbulb className="w-7 h-7" strokeWidth={1.5} />
+        </div>
         <h3 className="text-lg font-semibold text-text-heading mb-2">No budget data</h3>
         <p className="text-text-muted">Budget breakdown will appear after trip planning.</p>
       </div>
@@ -38,6 +41,7 @@ export default function BudgetTab({ budget }) {
         <h3 className="text-lg font-semibold text-text-heading mb-6">Cost Breakdown</h3>
         <div className="space-y-4">
           {CATEGORIES.map(cat => {
+            const Icon = cat.icon
             const amount = budget[cat.key] || 0
             const percentage = maxAmount > 0 ? (amount / maxAmount) * 100 : 0
             const totalPercentage = budget.total > 0 ? Math.round((amount / budget.total) * 100) : 0
@@ -46,7 +50,7 @@ export default function BudgetTab({ budget }) {
               <div key={cat.key}>
                 <div className="flex items-center justify-between mb-1">
                   <div className="flex items-center gap-2">
-                    <span>{cat.icon}</span>
+                    <Icon className="w-4 h-4 text-text-muted" strokeWidth={1.5} />
                     <span className="text-sm font-medium text-text-heading">{cat.label}</span>
                   </div>
                   <div className="flex items-center gap-2">
@@ -68,28 +72,23 @@ export default function BudgetTab({ budget }) {
 
       {/* Tips to save */}
       <Card padding="lg">
-        <h3 className="text-lg font-semibold text-text-heading mb-4">💡 Money-Saving Tips</h3>
+        <div className="flex items-center gap-2 mb-4">
+          <Lightbulb className="w-5 h-5 text-accent" strokeWidth={1.5} />
+          <h3 className="text-lg font-semibold text-text-heading">Money-Saving Tips</h3>
+        </div>
         <ul className="space-y-2 text-sm text-text">
-          <li className="flex items-start gap-2">
-            <span className="text-success">✓</span>
-            Book flights 2-3 months in advance for best prices
-          </li>
-          <li className="flex items-start gap-2">
-            <span className="text-success">✓</span>
-            Consider staying slightly outside the city center for lower hotel rates
-          </li>
-          <li className="flex items-start gap-2">
-            <span className="text-success">✓</span>
-            Eat at local restaurants instead of tourist areas
-          </li>
-          <li className="flex items-start gap-2">
-            <span className="text-success">✓</span>
-            Use public transportation instead of taxis
-          </li>
-          <li className="flex items-start gap-2">
-            <span className="text-success">✓</span>
-            Look for free walking tours and museum free days
-          </li>
+          {[
+            'Book flights 2-3 months in advance for best prices',
+            'Consider staying slightly outside the city center for lower hotel rates',
+            'Eat at local restaurants instead of tourist areas',
+            'Use public transportation instead of taxis',
+            'Look for free walking tours and museum free days',
+          ].map((tip, i) => (
+            <li key={i} className="flex items-start gap-2">
+              <Check className="w-4 h-4 text-success mt-0.5 shrink-0" strokeWidth={2.5} />
+              <span>{tip}</span>
+            </li>
+          ))}
         </ul>
       </Card>
     </div>

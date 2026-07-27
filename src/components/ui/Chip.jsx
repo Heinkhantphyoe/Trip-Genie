@@ -1,7 +1,6 @@
-
 export default function Chip({
   label,
-  icon,
+  icon: Icon,
   selected = false,
   onClick,
   className = '',
@@ -21,7 +20,7 @@ export default function Chip({
         ${className}
       `}
     >
-      {icon && <span className="text-base">{icon}</span>}
+      {Icon && <Icon className="w-4 h-4" strokeWidth={2} />}
       {label}
     </button>
   )

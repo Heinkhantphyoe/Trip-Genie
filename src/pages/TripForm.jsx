@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { MapPin, Calendar, Users2, Wallet, Sparkles, ArrowRight, ArrowLeft } from 'lucide-react'
 import { useTrip } from '../context/TripContext'
 import Container from '../components/layout/Container'
 import Button from '../components/ui/Button'
@@ -10,18 +11,21 @@ import TravelerSelector from '../components/trip/TravelerSelector'
 import BudgetSlider from '../components/trip/BudgetSlider'
 import InterestPicker from '../components/trip/InterestPicker'
 
+const STEP_ICONS = [MapPin, Calendar, Users2, Wallet, Sparkles]
+
 const STEPS = [
-  { id: 1, title: 'Destination', icon: '📍' },
-  { id: 2, title: 'Dates', icon: '📅' },
-  { id: 3, title: 'Travelers', icon: '👥' },
-  { id: 4, title: 'Budget', icon: '💰' },
-  { id: 5, title: 'Interests', icon: '✨' },
+  { id: 1, title: 'Destination' },
+  { id: 2, title: 'Dates' },
+  { id: 3, title: 'Travelers' },
+  { id: 4, title: 'Budget' },
+  { id: 5, title: 'Interests' },
 ]
 
 export default function TripForm() {
   const navigate = useNavigate()
   const { state, dispatch } = useTrip()
   const [step, setStep] = useState(1)
+  const StepIcon = STEP_ICONS[step - 1]
 
   function canProceed() {
     switch (step) {
@@ -29,7 +33,7 @@ export default function TripForm() {
       case 2: return state.startDate !== '' && state.endDate !== ''
       case 3: return state.adults >= 1
       case 4: return state.budgetLevel !== ''
-      case 5: return true // interests are optional
+      case 5: return true
       default: return false
     }
   }
@@ -51,6 +55,9 @@ export default function TripForm() {
       <div className="max-w-2xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8 animate-fade-in">
+          <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-accent text-white mb-4">
+            <StepIcon className="w-6 h-6" strokeWidth={1.5} />
+          </div>
           <h1 className="text-3xl font-bold text-text-heading mb-2">Plan Your Trip</h1>
           <p className="text-text-muted">Step {step} of 5 — {STEPS[step - 1].title}</p>
         </div>
@@ -60,32 +67,41 @@ export default function TripForm() {
 
         {/* Step indicators */}
         <div className="flex justify-between mb-8">
-          {STEPS.map(s => (
-            <div
-              key={s.id}
-              className={`flex flex-col items-center gap-1 transition-all duration-300 ${
-                s.id === step ? 'scale-110' : s.id < step ? 'opacity-70' : 'opacity-40'
-              }`}
-            >
-              <div className={`
-                w-10 h-10 rounded-full flex items-center justify-center text-lg
-                transition-all duration-300
-                ${s.id === step
-                  ? 'bg-primary text-white shadow-md'
-                  : s.id < step
-                    ? 'bg-success text-white'
-                    : 'bg-surface-alt text-text-muted border border-border'
-                }
-              `}>
-                {s.id < step ? '✓' : s.icon}
+          {STEPS.map(s => {
+            const Icon = STEP_ICONS[s.id - 1]
+            return (
+              <div
+                key={s.id}
+                className={`flex flex-col items-center gap-1.5 transition-all duration-300 ${
+                  s.id === step ? 'scale-110' : s.id < step ? 'opacity-70' : 'opacity-40'
+                }`}
+              >
+                <div className={`
+                  w-10 h-10 rounded-full flex items-center justify-center
+                  transition-all duration-300
+                  ${s.id === step
+                    ? 'bg-gradient-to-br from-primary to-accent text-white shadow-md'
+                    : s.id < step
+                      ? 'bg-success text-white'
+                      : 'bg-surface-alt text-text-muted border border-border'
+                  }
+                `}>
+                  {s.id < step ? (
+                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                  ) : (
+                    <Icon className="w-4 h-4" strokeWidth={2} />
+                  )}
+                </div>
+                <span className={`text-xs font-medium hidden sm:block ${
+                  s.id === step ? 'text-primary font-semibold' : 'text-text-muted'
+                }`}>
+                  {s.title}
+                </span>
               </div>
-              <span className={`text-xs font-medium hidden sm:block ${
-                s.id === step ? 'text-primary' : 'text-text-muted'
-              }`}>
-                {s.title}
-              </span>
-            </div>
-          ))}
+            )
+          })}
         </div>
 
         {/* Step content */}
@@ -149,14 +165,25 @@ export default function TripForm() {
             onClick={handleBack}
             disabled={step === 1}
           >
-            ← Back
+            <ArrowLeft className="w-4 h-4" />
+            Back
           </Button>
           <Button
             onClick={handleNext}
             disabled={!canProceed()}
             className="flex-1 max-w-xs"
           >
-            {step === 5 ? '✨ Generate Trip Plan' : 'Next →'}
+            {step === 5 ? (
+              <>
+                Generate Trip Plan
+                <Sparkles className="w-4 h-4" />
+              </>
+            ) : (
+              <>
+                Next
+                <ArrowRight className="w-4 h-4" />
+              </>
+            )}
           </Button>
         </div>
       </div>

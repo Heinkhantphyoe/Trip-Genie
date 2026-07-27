@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Zap, CalendarDays, Plane, Globe, Moon, ChevronLeft, ChevronRight } from 'lucide-react'
 
 function toLocalDateString(date) {
   const y = date.getFullYear()
@@ -16,10 +17,10 @@ function formatDateDisplay(dateStr) {
 const today = toLocalDateString(new Date())
 
 const QUICK_DURATIONS = [
-  { label: 'Weekend', nights: 2, icon: '⚡' },
-  { label: '3 Days', nights: 3, icon: '🗓️' },
-  { label: '1 Week', nights: 7, icon: '✈️' },
-  { label: '2 Weeks', nights: 14, icon: '🌍' },
+  { label: 'Weekend', nights: 2, icon: Zap },
+  { label: '3 Days', nights: 3, icon: CalendarDays },
+  { label: '1 Week', nights: 7, icon: Plane },
+  { label: '2 Weeks', nights: 14, icon: Globe },
 ]
 
 export default function DatePicker({ startDate, endDate, onStartChange, onEndChange }) {
@@ -32,7 +33,6 @@ export default function DatePicker({ startDate, endDate, onStartChange, onEndCha
 
   function handleQuickDuration(nightsCount) {
     if (!startDate) {
-      // If no start date, set start to today
       onStartChange(today)
       const end = new Date()
       end.setDate(end.getDate() + nightsCount)
@@ -52,26 +52,29 @@ export default function DatePicker({ startDate, endDate, onStartChange, onEndCha
 
       {/* Quick duration buttons */}
       <div className="grid grid-cols-4 gap-3 mb-6">
-        {QUICK_DURATIONS.map(d => (
-          <button
-            key={d.label}
-            type="button"
-            onClick={() => handleQuickDuration(d.nights)}
-            className={`
-              p-3 rounded-xl border-2 transition-all duration-200 cursor-pointer text-center
-              active:scale-[0.97]
-              ${nights === d.nights
-                ? 'border-primary bg-primary-light shadow-md'
-                : 'border-border bg-surface hover:border-primary/40'
-              }
-            `}
-          >
-            <span className="text-xl block mb-1">{d.icon}</span>
-            <span className={`text-sm font-semibold ${nights === d.nights ? 'text-primary' : 'text-text-heading'}`}>
-              {d.label}
-            </span>
-          </button>
-        ))}
+        {QUICK_DURATIONS.map(d => {
+          const Icon = d.icon
+          return (
+            <button
+              key={d.label}
+              type="button"
+              onClick={() => handleQuickDuration(d.nights)}
+              className={`
+                p-3 rounded-xl border-2 transition-all duration-200 cursor-pointer text-center
+                active:scale-[0.97]
+                ${nights === d.nights
+                  ? 'border-primary bg-primary-light shadow-md'
+                  : 'border-border bg-surface hover:border-primary/40'
+                }
+              `}
+            >
+              <Icon className={`w-5 h-5 mx-auto mb-1 ${nights === d.nights ? 'text-primary' : 'text-text-muted'}`} strokeWidth={1.5} />
+              <span className={`text-sm font-semibold ${nights === d.nights ? 'text-primary' : 'text-text-heading'}`}>
+                {d.label}
+              </span>
+            </button>
+          )
+        })}
       </div>
 
       {/* Custom date selection */}
@@ -83,15 +86,15 @@ export default function DatePicker({ startDate, endDate, onStartChange, onEndCha
             type="button"
             onClick={() => { setShowStartPicker(!showStartPicker); setShowEndPicker(false) }}
             className={`
-              w-full px-4 py-3 rounded-xl border-2 text-left transition-all duration-200
+              w-full px-4 py-3 rounded-xl border-2 text-left transition-all duration-200 flex items-center gap-2
               ${startDate
                 ? 'border-primary bg-primary-light text-text-heading'
                 : 'border-border bg-surface text-text-muted'
               }
             `}
           >
-            <span className="text-sm">📅</span>
-            <span className="ml-2 text-sm font-medium">
+            <CalendarDays className="w-4 h-4 shrink-0" strokeWidth={1.5} />
+            <span className="text-sm font-medium">
               {startDate ? formatDateDisplay(startDate) : 'Pick a date'}
             </span>
           </button>
@@ -115,7 +118,7 @@ export default function DatePicker({ startDate, endDate, onStartChange, onEndCha
             type="button"
             onClick={() => { if (startDate) { setShowEndPicker(!showEndPicker); setShowStartPicker(false) } }}
             className={`
-              w-full px-4 py-3 rounded-xl border-2 text-left transition-all duration-200
+              w-full px-4 py-3 rounded-xl border-2 text-left transition-all duration-200 flex items-center gap-2
               ${!startDate ? 'opacity-50 cursor-not-allowed' : ''}
               ${endDate
                 ? 'border-primary bg-primary-light text-text-heading'
@@ -124,8 +127,8 @@ export default function DatePicker({ startDate, endDate, onStartChange, onEndCha
             `}
             disabled={!startDate}
           >
-            <span className="text-sm">📅</span>
-            <span className="ml-2 text-sm font-medium">
+            <CalendarDays className="w-4 h-4 shrink-0" strokeWidth={1.5} />
+            <span className="text-sm font-medium">
               {endDate ? formatDateDisplay(endDate) : 'Pick a date'}
             </span>
           </button>
@@ -146,7 +149,7 @@ export default function DatePicker({ startDate, endDate, onStartChange, onEndCha
       {/* Duration display */}
       {startDate && endDate && (
         <div className="mt-4 p-3 rounded-xl bg-surface-alt border border-border flex items-center justify-center gap-2">
-          <span className="text-lg">🌙</span>
+          <Moon className="w-5 h-5 text-accent" strokeWidth={1.5} />
           <span className="text-sm font-medium text-text-heading">
             {nights} night{nights !== 1 ? 's' : ''} · {nights + 1} day{nights + 1 !== 1 ? 's' : ''}
           </span>
@@ -215,7 +218,7 @@ function MiniCalendar({ selected, minDate, onSelect, onClose }) {
           onClick={prevMonth}
           className="w-8 h-8 rounded-lg flex items-center justify-center text-text-muted hover:bg-surface-alt transition-colors"
         >
-          ←
+          <ChevronLeft className="w-4 h-4" />
         </button>
         <span className="text-sm font-semibold text-text-heading">{monthName}</span>
         <button
@@ -223,7 +226,7 @@ function MiniCalendar({ selected, minDate, onSelect, onClose }) {
           onClick={nextMonth}
           className="w-8 h-8 rounded-lg flex items-center justify-center text-text-muted hover:bg-surface-alt transition-colors"
         >
-          →
+          <ChevronRight className="w-4 h-4" />
         </button>
       </div>
 

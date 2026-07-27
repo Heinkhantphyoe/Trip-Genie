@@ -1,3 +1,4 @@
+import { MapPin, Clock, Lightbulb, UtensilsCrossed, Wallet, Footprints } from 'lucide-react'
 import Card from '../ui/Card'
 import Badge from '../ui/Badge'
 import { formatCurrency } from '../../utils/format'
@@ -6,7 +7,9 @@ export default function ItineraryTab({ itinerary }) {
   if (!itinerary || itinerary.length === 0) {
     return (
       <div className="text-center py-12">
-        <span className="text-5xl block mb-4">🗺️</span>
+        <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-accent/10 text-accent mb-4">
+          <MapPin className="w-7 h-7" strokeWidth={1.5} />
+        </div>
         <h3 className="text-lg font-semibold text-text-heading mb-2">No itinerary generated</h3>
         <p className="text-text-muted">Try modifying your trip preferences.</p>
       </div>
@@ -19,7 +22,7 @@ export default function ItineraryTab({ itinerary }) {
         <div key={day.day} className="animate-slide-up" style={{ animationDelay: `${day.day * 50}ms` }}>
           {/* Day header */}
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold text-sm">
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-accent text-white flex items-center justify-center font-bold text-sm shadow-md">
               {day.day}
             </div>
             <div>
@@ -44,11 +47,21 @@ export default function ItineraryTab({ itinerary }) {
                       <h4 className="font-semibold text-text-heading">{activity.name}</h4>
                       <p className="text-sm text-text-muted mt-1">{activity.description}</p>
                       <div className="flex items-center gap-3 mt-2 text-xs text-text-muted">
-                        {activity.location && <span>📍 {activity.location}</span>}
-                        {activity.duration && <span>⏱️ {activity.duration}</span>}
+                        {activity.location && (
+                          <span className="flex items-center gap-1">
+                            <MapPin className="w-3 h-3" strokeWidth={1.5} /> {activity.location}
+                          </span>
+                        )}
+                        {activity.duration && (
+                          <span className="flex items-center gap-1">
+                            <Clock className="w-3 h-3" strokeWidth={1.5} /> {activity.duration}
+                          </span>
+                        )}
                       </div>
                       {activity.tip && (
-                        <p className="text-xs text-accent mt-2">💡 {activity.tip}</p>
+                        <p className="flex items-center gap-1 text-xs text-accent mt-2">
+                          <Lightbulb className="w-3 h-3" strokeWidth={2} /> {activity.tip}
+                        </p>
                       )}
                     </div>
                     {activity.cost > 0 && (
@@ -66,7 +79,10 @@ export default function ItineraryTab({ itinerary }) {
               <div className="relative">
                 <div className="absolute -left-[31px] top-2 w-3 h-3 rounded-full bg-accent border-2 border-surface" />
                 <Card padding="sm" className="bg-accent/5 border-accent/20">
-                  <p className="text-xs font-semibold text-accent mb-2">🍽️ MEALS</p>
+                  <div className="flex items-center gap-1.5 mb-2">
+                    <UtensilsCrossed className="w-3.5 h-3.5 text-accent" strokeWidth={2} />
+                    <p className="text-xs font-semibold text-accent">MEALS</p>
+                  </div>
                   <div className="space-y-1">
                     {day.meals.map((meal, i) => (
                       <p key={i} className="text-sm text-text">
@@ -82,10 +98,14 @@ export default function ItineraryTab({ itinerary }) {
             {/* Daily budget + transit */}
             <div className="flex items-center gap-4 text-xs text-text-muted">
               {day.dailyBudget > 0 && (
-                <span>💰 Est. {formatCurrency(day.dailyBudget)}/day</span>
+                <span className="flex items-center gap-1">
+                  <Wallet className="w-3 h-3" strokeWidth={1.5} /> Est. {formatCurrency(day.dailyBudget)}/day
+                </span>
               )}
               {day.transitNotes && (
-                <span>🚶 {day.transitNotes}</span>
+                <span className="flex items-center gap-1">
+                  <Footprints className="w-3 h-3" strokeWidth={1.5} /> {day.transitNotes}
+                </span>
               )}
             </div>
           </div>

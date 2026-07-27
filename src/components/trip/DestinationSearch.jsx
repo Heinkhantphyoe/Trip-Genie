@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useMemo } from 'react'
+import { Search, MapPin } from 'lucide-react'
 import { searchCitiesOffline } from '../../services/cities'
 
 export default function DestinationSearch({ value, onChange, label = 'Where do you want to go?', placeholder = 'Search for a city...' }) {
@@ -39,7 +40,7 @@ export default function DestinationSearch({ value, onChange, label = 'Where do y
         {label}
       </label>
       <div className="relative">
-        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted">🔍</span>
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-text-muted" strokeWidth={1.5} />
         <input
           type="text"
           value={query}
@@ -62,7 +63,7 @@ export default function DestinationSearch({ value, onChange, label = 'Where do y
               className="px-4 py-3 cursor-pointer hover:bg-primary-light transition-colors
                 flex items-center gap-3 border-b border-border last:border-b-0"
             >
-              <span className="text-lg">📍</span>
+              <MapPin className="w-5 h-5 text-primary shrink-0" strokeWidth={1.5} />
               <div>
                 <div className="font-medium text-text-heading">{city.city}</div>
                 <div className="text-sm text-text-muted">{city.country}</div>

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTrip } from '../context/TripContext'
 import { useTripPlanner } from '../hooks/useTripPlanner'
+import { LayoutDashboard, Plane, Building2, Map, Wallet, Lightbulb, ArrowLeft, RotateCcw, Frown } from 'lucide-react'
 import Container from '../components/layout/Container'
 import Tabs from '../components/ui/Tabs'
 import ProgressBar from '../components/ui/ProgressBar'
@@ -14,12 +15,12 @@ import BudgetTab from '../components/trip/BudgetTab'
 import TipsTab from '../components/trip/TipsTab'
 
 const TABS = [
-  { id: 'overview', label: 'Overview', icon: '📊' },
-  { id: 'flights', label: 'Flights', icon: '✈️' },
-  { id: 'hotels', label: 'Hotels', icon: '🏨' },
-  { id: 'itinerary', label: 'Itinerary', icon: '🗺️' },
-  { id: 'budget', label: 'Budget', icon: '💰' },
-  { id: 'tips', label: 'Tips', icon: '💡' },
+  { id: 'overview', label: 'Overview', icon: LayoutDashboard },
+  { id: 'flights', label: 'Flights', icon: Plane },
+  { id: 'hotels', label: 'Hotels', icon: Building2 },
+  { id: 'itinerary', label: 'Itinerary', icon: Map },
+  { id: 'budget', label: 'Budget', icon: Wallet },
+  { id: 'tips', label: 'Tips', icon: Lightbulb },
 ]
 
 export default function Results() {
@@ -42,7 +43,9 @@ export default function Results() {
     return (
       <Container className="py-20">
         <div className="max-w-lg mx-auto text-center animate-fade-in">
-          <div className="text-6xl mb-6 animate-bounce">✈️</div>
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary/10 text-primary mb-6">
+            <Map className="w-8 h-8 animate-float" strokeWidth={1.5} />
+          </div>
           <h2 className="text-2xl font-bold text-text-heading mb-2">Planning your trip...</h2>
           <p className="text-text-muted mb-8">{loadingMessage}</p>
           <ProgressBar value={progress} max={100} showLabel size="md" />
@@ -57,14 +60,22 @@ export default function Results() {
     return (
       <Container className="py-20">
         <div className="max-w-lg mx-auto text-center animate-fade-in">
-          <div className="text-6xl mb-6">😞</div>
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-danger/10 text-danger mb-6">
+            <Frown className="w-8 h-8" strokeWidth={1.5} />
+          </div>
           <h2 className="text-2xl font-bold text-text-heading mb-2">Something went wrong</h2>
           <p className="text-text-muted mb-8">
             Our service is temporarily unavailable. Please try again in a few minutes.
           </p>
           <div className="flex gap-4 justify-center">
-            <Button variant="secondary" onClick={() => navigate('/plan')}>← Modify Trip</Button>
-            <Button onClick={() => planTrip(state)}>Try Again</Button>
+            <Button variant="secondary" onClick={() => navigate('/plan')}>
+              <ArrowLeft className="w-4 h-4" />
+              Modify Trip
+            </Button>
+            <Button onClick={() => planTrip(state)}>
+              <RotateCcw className="w-4 h-4" />
+              Try Again
+            </Button>
           </div>
         </div>
       </Container>
@@ -108,7 +119,10 @@ export default function Results() {
 
       {/* Actions */}
       <div className="flex justify-center gap-4 mt-8 pt-6 border-t border-border">
-        <Button variant="secondary" onClick={() => navigate('/plan')}>← Modify Trip</Button>
+        <Button variant="secondary" onClick={() => navigate('/plan')}>
+          <ArrowLeft className="w-4 h-4" />
+          Modify Trip
+        </Button>
         <Button variant="ghost" onClick={() => navigate('/')}>Start Over</Button>
       </div>
     </Container>

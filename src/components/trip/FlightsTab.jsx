@@ -1,3 +1,4 @@
+import { Plane, Frown } from 'lucide-react'
 import Card from '../ui/Card'
 import Badge from '../ui/Badge'
 import { formatCurrency } from '../../utils/format'
@@ -6,7 +7,9 @@ export default function FlightsTab({ flights }) {
   if (!flights || flights.length === 0) {
     return (
       <div className="text-center py-12">
-        <span className="text-5xl block mb-4">✈️</span>
+        <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-primary/10 text-primary mb-4">
+          <Frown className="w-7 h-7" strokeWidth={1.5} />
+        </div>
         <h3 className="text-lg font-semibold text-text-heading mb-2">No flights found</h3>
         <p className="text-text-muted">Try adjusting your dates or destination.</p>
       </div>
@@ -26,7 +29,7 @@ export default function FlightsTab({ flights }) {
             {/* Airline + flight info */}
             <div className="flex-1">
               <div className="flex items-center gap-2 mb-2">
-                <span className="text-xl">✈️</span>
+                <Plane className="w-5 h-5 text-accent" strokeWidth={1.5} />
                 <span className="font-semibold text-text-heading">{flight.airline}</span>
                 <Badge variant="default" size="sm">{flight.flightNumber}</Badge>
               </div>

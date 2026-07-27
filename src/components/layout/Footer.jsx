@@ -1,3 +1,4 @@
+import { MapPin } from 'lucide-react'
 import Container from './Container'
 
 export default function Footer() {
@@ -6,7 +7,7 @@ export default function Footer() {
       <Container>
         <div className="py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <span className="text-lg">✈️</span>
+            <MapPin className="w-4 h-4 text-primary" strokeWidth={2.5} />
             <span className="text-sm font-semibold text-text-heading">TripGenie</span>
           </div>
           <p className="text-sm text-text-muted">

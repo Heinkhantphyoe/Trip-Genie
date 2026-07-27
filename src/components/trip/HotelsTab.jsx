@@ -1,3 +1,4 @@
+import { Building2, Star, Check, Frown } from 'lucide-react'
 import Card from '../ui/Card'
 import Badge from '../ui/Badge'
 import { formatCurrency } from '../../utils/format'
@@ -6,7 +7,9 @@ export default function HotelsTab({ hotels }) {
   if (!hotels || hotels.length === 0) {
     return (
       <div className="text-center py-12">
-        <span className="text-5xl block mb-4">🏨</span>
+        <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-accent/10 text-accent mb-4">
+          <Frown className="w-7 h-7" strokeWidth={1.5} />
+        </div>
         <h3 className="text-lg font-semibold text-text-heading mb-2">No hotels found</h3>
         <p className="text-text-muted">Try adjusting your dates or destination.</p>
       </div>
@@ -22,17 +25,22 @@ export default function HotelsTab({ hotels }) {
           <Card key={i} padding="md" hover>
             {/* Header */}
             <div className="flex items-start justify-between mb-3">
-              <div>
-                <h4 className="font-semibold text-text-heading">{hotel.name}</h4>
-                <p className="text-sm text-text-muted">{hotel.location} · {hotel.distanceToCenter}</p>
+              <div className="flex items-start gap-2">
+                <Building2 className="w-5 h-5 text-primary mt-0.5 shrink-0" strokeWidth={1.5} />
+                <div>
+                  <h4 className="font-semibold text-text-heading">{hotel.name}</h4>
+                  <p className="text-sm text-text-muted">{hotel.location} · {hotel.distanceToCenter}</p>
+                </div>
               </div>
               <Badge variant="primary">{hotel.type}</Badge>
             </div>
 
             {/* Ratings */}
             <div className="flex items-center gap-3 mb-3">
-              <div className="flex items-center gap-1">
-                {'⭐'.repeat(Math.min(hotel.starRating || 0, 5))}
+              <div className="flex items-center gap-0.5">
+                {Array.from({ length: Math.min(hotel.starRating || 0, 5) }).map((_, i) => (
+                  <Star key={i} className="w-3.5 h-3.5 text-amber-400 fill-amber-400" strokeWidth={1.5} />
+                ))}
                 <span className="text-xs text-text-muted ml-1">{hotel.starRating}★</span>
               </div>
               {hotel.guestRating && (
@@ -68,7 +76,9 @@ export default function HotelsTab({ hotels }) {
 
             {/* Cancellation */}
             {hotel.cancellationPolicy && (
-              <p className="text-xs text-success mt-2">✓ {hotel.cancellationPolicy}</p>
+              <p className="flex items-center gap-1 text-xs text-success mt-2">
+                <Check className="w-3 h-3" strokeWidth={2.5} /> {hotel.cancellationPolicy}
+              </p>
             )}
           </Card>
         ))}

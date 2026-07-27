@@ -24,3 +24,5 @@ dist-ssr
 *.sw?
 
 .env
+.opencode/
+node_modules/.cache/ui-ux-pro-max*
