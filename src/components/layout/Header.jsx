@@ -1,6 +1,7 @@
 import { Link, useLocation } from 'react-router-dom'
 import { MapPin, Compass } from 'lucide-react'
 import Container from './Container'
+import ThemeToggle from '../ui/ThemeToggle'
 
 export default function Header() {
   const location = useLocation()
@@ -18,14 +19,17 @@ export default function Header() {
             <span className="text-xl font-bold text-text-heading">TripGenie</span>
           </Link>
 
-          {!isLanding && (
-            <Link
-              to="/"
-              className="text-sm font-medium text-text-muted hover:text-primary transition-colors no-underline"
-            >
-              Start Over
-            </Link>
-          )}
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+            {!isLanding && (
+              <Link
+                to="/"
+                className="text-sm font-medium text-text-muted hover:text-primary transition-colors no-underline"
+              >
+                Start Over
+              </Link>
+            )}
+          </div>
         </div>
       </Container>
     </header>
