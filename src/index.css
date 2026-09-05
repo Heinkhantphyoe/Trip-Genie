@@ -126,6 +126,20 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* Burmese language font support */
+:root:is([lang="my"]) body,
+:root:is([lang="my"]) h1,
+:root:is([lang="my"]) h2,
+:root:is([lang="my"]) h3,
+:root:is([lang="my"]) h4,
+:root:is([lang="my"]) p,
+:root:is([lang="my"]) span,
+:root:is([lang="my"]) label,
+:root:is([lang="my"]) button,
+:root:is([lang="my"]) a {
+  font-family: 'Noto Sans Myanmar', 'Inter', system-ui, -apple-system, sans-serif;
+}
+
 /* Smooth theme transition for all themed elements */
 .dark,
 .dark * {

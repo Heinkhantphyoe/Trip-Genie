@@ -1,3 +1,4 @@
+import i18n from '../i18n'
 import { API_URLS } from '../utils/constants'
 
 export async function getWeatherForecast(lat, lon, startDate, endDate) {
@@ -23,13 +24,18 @@ export async function getWeatherForecast(lat, lon, startDate, endDate) {
   }
 }
 
+const WEATHER_CODE_KEYS = {
+  0: 'clearSky', 1: 'mainlyClear', 2: 'partlyCloudy', 3: 'overcast',
+  45: 'fog', 48: 'rimeFog', 51: 'lightDrizzle', 53: 'moderateDrizzle',
+  55: 'denseDrizzle', 61: 'slightRain', 63: 'moderateRain', 65: 'heavyRain',
+  71: 'slightSnow', 73: 'moderateSnow', 75: 'heavySnow', 80: 'slightShowers',
+  81: 'moderateShowers', 82: 'violentShowers', 95: 'thunderstorm',
+}
+
 function getWeatherDescription(code) {
-  const descriptions = {
-    0: 'Clear sky', 1: 'Mainly clear', 2: 'Partly cloudy', 3: 'Overcast',
-    45: 'Fog', 48: 'Rime fog', 51: 'Light drizzle', 53: 'Moderate drizzle',
-    55: 'Dense drizzle', 61: 'Slight rain', 63: 'Moderate rain', 65: 'Heavy rain',
-    71: 'Slight snow', 73: 'Moderate snow', 75: 'Heavy snow', 80: 'Slight showers',
-    81: 'Moderate showers', 82: 'Violent showers', 95: 'Thunderstorm',
+  const key = WEATHER_CODE_KEYS[code]
+  if (key) {
+    return i18n.t(`weather.${key}`)
   }
-  return descriptions[code] || 'Unknown'
+  return i18n.t('weather.unknown')
 }

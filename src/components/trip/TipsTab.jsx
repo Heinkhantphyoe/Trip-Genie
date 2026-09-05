@@ -1,19 +1,21 @@
 import { useState } from 'react'
 import { ClipboardList, Plane, Bus, Landmark, UtensilsCrossed, ShieldCheck, CreditCard, Wifi, ChevronUp, ChevronDown, Phone, Languages, Backpack, Lightbulb } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import Card from '../ui/Card'
 
-const TIP_CATEGORIES = [
-  { key: 'beforeYouGo', label: 'Before You Go', icon: ClipboardList },
-  { key: 'arrival', label: 'Arrival', icon: Plane },
-  { key: 'gettingAround', label: 'Getting Around', icon: Bus },
-  { key: 'culture', label: 'Culture', icon: Landmark },
-  { key: 'food', label: 'Food & Drink', icon: UtensilsCrossed },
-  { key: 'safety', label: 'Safety', icon: ShieldCheck },
-  { key: 'money', label: 'Money', icon: CreditCard },
-  { key: 'connectivity', label: 'Connectivity', icon: Wifi },
+const TIP_CATEGORY_KEYS = [
+  { key: 'beforeYouGo', icon: ClipboardList },
+  { key: 'arrival', icon: Plane },
+  { key: 'gettingAround', icon: Bus },
+  { key: 'culture', icon: Landmark },
+  { key: 'food', icon: UtensilsCrossed },
+  { key: 'safety', icon: ShieldCheck },
+  { key: 'money', icon: CreditCard },
+  { key: 'connectivity', icon: Wifi },
 ]
 
 export default function TipsTab({ tips }) {
+  const { t } = useTranslation()
   const [expanded, setExpanded] = useState(null)
 
   if (!tips || !tips.tips) {
@@ -22,8 +24,8 @@ export default function TipsTab({ tips }) {
         <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-accent/10 text-accent mb-4">
           <Lightbulb className="w-7 h-7" strokeWidth={1.5} />
         </div>
-        <h3 className="text-lg font-semibold text-text-heading mb-2">No tips available</h3>
-        <p className="text-text-muted">Tips will appear after trip planning.</p>
+        <h3 className="text-lg font-semibold text-text-heading mb-2">{t('tips.noResults')}</h3>
+        <p className="text-text-muted">{t('tips.noResultsHint')}</p>
       </div>
     )
   }
@@ -32,7 +34,7 @@ export default function TipsTab({ tips }) {
     <div className="space-y-6">
       {/* Tip categories */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        {TIP_CATEGORIES.map(cat => {
+        {TIP_CATEGORY_KEYS.map(cat => {
           const Icon = cat.icon
           const catTips = tips.tips[cat.key]
           if (!catTips || catTips.length === 0) return null
@@ -49,7 +51,7 @@ export default function TipsTab({ tips }) {
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <Icon className="w-5 h-5 text-primary" strokeWidth={1.5} />
-                  <h4 className="font-semibold text-text-heading">{cat.label}</h4>
+                  <h4 className="font-semibold text-text-heading">{t(`tips.categories.${cat.key}`)}</h4>
                 </div>
                 <span className="text-text-muted">
                   {isOpen ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
@@ -76,7 +78,7 @@ export default function TipsTab({ tips }) {
         <Card padding="lg">
           <div className="flex items-center gap-2 mb-4">
             <Phone className="w-5 h-5 text-danger" strokeWidth={1.5} />
-            <h3 className="text-lg font-semibold text-text-heading">Emergency Numbers</h3>
+            <h3 className="text-lg font-semibold text-text-heading">{t('tips.emergencyNumbers')}</h3>
           </div>
           <div className="grid grid-cols-3 gap-4 text-center">
             {Object.entries(tips.emergencyNumbers).map(([key, value]) => (
@@ -94,7 +96,7 @@ export default function TipsTab({ tips }) {
         <Card padding="lg">
           <div className="flex items-center gap-2 mb-4">
             <Languages className="w-5 h-5 text-accent" strokeWidth={1.5} />
-            <h3 className="text-lg font-semibold text-text-heading">Useful Phrases</h3>
+            <h3 className="text-lg font-semibold text-text-heading">{t('tips.usefulPhrases')}</h3>
           </div>
           <div className="space-y-2">
             {tips.usefulPhrases.map((p, i) => (
@@ -118,7 +120,7 @@ export default function TipsTab({ tips }) {
         <Card padding="lg">
           <div className="flex items-center gap-2 mb-4">
             <Backpack className="w-5 h-5 text-primary" strokeWidth={1.5} />
-            <h3 className="text-lg font-semibold text-text-heading">Packing List</h3>
+            <h3 className="text-lg font-semibold text-text-heading">{t('tips.packingList')}</h3>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
             {tips.packingList.map((item, i) => (

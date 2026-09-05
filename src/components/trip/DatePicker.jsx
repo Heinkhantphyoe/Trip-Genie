@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Zap, CalendarDays, Plane, Globe, Moon, ChevronLeft, ChevronRight } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 
 function toLocalDateString(date) {
   const y = date.getFullYear()
@@ -8,24 +9,27 @@ function toLocalDateString(date) {
   return `${y}-${m}-${d}`
 }
 
-function formatDateDisplay(dateStr) {
+function formatDateDisplay(dateStr, locale) {
   if (!dateStr) return ''
   const date = new Date(dateStr + 'T00:00:00')
-  return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+  return date.toLocaleDateString(locale, { month: 'short', day: 'numeric', year: 'numeric' })
 }
 
 const today = toLocalDateString(new Date())
 
-const QUICK_DURATIONS = [
-  { label: 'Weekend', nights: 2, icon: Zap },
-  { label: '3 Days', nights: 3, icon: CalendarDays },
-  { label: '1 Week', nights: 7, icon: Plane },
-  { label: '2 Weeks', nights: 14, icon: Globe },
+const QUICK_DURATION_KEYS = [
+  { key: 'weekend', nights: 2, icon: Zap },
+  { key: 'threeDays', nights: 3, icon: CalendarDays },
+  { key: 'oneWeek', nights: 7, icon: Plane },
+  { key: 'twoWeeks', nights: 14, icon: Globe },
 ]
 
 export default function DatePicker({ startDate, endDate, onStartChange, onEndChange }) {
+  const { t, i18n } = useTranslation()
   const [showStartPicker, setShowStartPicker] = useState(false)
   const [showEndPicker, setShowEndPicker] = useState(false)
+
+  const locale = i18n.language?.split('-')[0] === 'my' ? 'my' : 'en-US'
 
   const nights = startDate && endDate
     ? Math.ceil((new Date(endDate) - new Date(startDate)) / (1000 * 60 * 60 * 24))
@@ -47,16 +51,16 @@ export default function DatePicker({ startDate, endDate, onStartChange, onEndCha
   return (
     <div>
       <label className="block text-sm font-medium text-text-heading mb-3">
-        When are you traveling?
+        {t('form.dates.label')}
       </label>
 
       {/* Quick duration buttons */}
       <div className="grid grid-cols-4 gap-3 mb-6">
-        {QUICK_DURATIONS.map(d => {
+        {QUICK_DURATION_KEYS.map(d => {
           const Icon = d.icon
           return (
             <button
-              key={d.label}
+              key={d.key}
               type="button"
               onClick={() => handleQuickDuration(d.nights)}
               className={`
@@ -70,7 +74,7 @@ export default function DatePicker({ startDate, endDate, onStartChange, onEndCha
             >
               <Icon className={`w-5 h-5 mx-auto mb-1 ${nights === d.nights ? 'text-primary' : 'text-text-muted'}`} strokeWidth={1.5} />
               <span className={`text-sm font-semibold ${nights === d.nights ? 'text-primary' : 'text-text-heading'}`}>
-                {d.label}
+                {t(`form.dates.quickDurations.${d.key}`)}
               </span>
             </button>
           )
@@ -81,7 +85,7 @@ export default function DatePicker({ startDate, endDate, onStartChange, onEndCha
       <div className="grid grid-cols-2 gap-4">
         {/* Start date */}
         <div className="relative">
-          <label className="block text-xs text-text-muted mb-1.5">Departure</label>
+          <label className="block text-xs text-text-muted mb-1.5">{t('form.dates.departure')}</label>
           <button
             type="button"
             onClick={() => { setShowStartPicker(!showStartPicker); setShowEndPicker(false) }}
@@ -95,7 +99,7 @@ export default function DatePicker({ startDate, endDate, onStartChange, onEndCha
           >
             <CalendarDays className="w-4 h-4 shrink-0" strokeWidth={1.5} />
             <span className="text-sm font-medium">
-              {startDate ? formatDateDisplay(startDate) : 'Pick a date'}
+              {startDate ? formatDateDisplay(startDate, locale) : t('form.dates.pickDate')}
             </span>
           </button>
 
@@ -113,7 +117,7 @@ export default function DatePicker({ startDate, endDate, onStartChange, onEndCha
 
         {/* End date */}
         <div className="relative">
-          <label className="block text-xs text-text-muted mb-1.5">Return</label>
+          <label className="block text-xs text-text-muted mb-1.5">{t('form.dates.return')}</label>
           <button
             type="button"
             onClick={() => { if (startDate) { setShowEndPicker(!showEndPicker); setShowStartPicker(false) } }}
@@ -129,7 +133,7 @@ export default function DatePicker({ startDate, endDate, onStartChange, onEndCha
           >
             <CalendarDays className="w-4 h-4 shrink-0" strokeWidth={1.5} />
             <span className="text-sm font-medium">
-              {endDate ? formatDateDisplay(endDate) : 'Pick a date'}
+              {endDate ? formatDateDisplay(endDate, locale) : t('form.dates.pickDate')}
             </span>
           </button>
 
@@ -151,7 +155,7 @@ export default function DatePicker({ startDate, endDate, onStartChange, onEndCha
         <div className="mt-4 p-3 rounded-xl bg-surface-alt border border-border flex items-center justify-center gap-2">
           <Moon className="w-5 h-5 text-accent" strokeWidth={1.5} />
           <span className="text-sm font-medium text-text-heading">
-            {nights} night{nights !== 1 ? 's' : ''} · {nights + 1} day{nights + 1 !== 1 ? 's' : ''}
+            {t('form.dates.duration', { nights, days: nights + 1 })}
           </span>
         </div>
       )}
@@ -162,6 +166,9 @@ export default function DatePicker({ startDate, endDate, onStartChange, onEndCha
 // ─── Mini Calendar Component ───
 
 function MiniCalendar({ selected, minDate, onSelect, onClose }) {
+  const { t, i18n } = useTranslation()
+  const locale = i18n.language?.split('-')[0] === 'my' ? 'my' : 'en-US'
+
   const [viewDate, setViewDate] = useState(() => {
     if (selected) {
       const d = new Date(selected + 'T00:00:00')
@@ -174,7 +181,7 @@ function MiniCalendar({ selected, minDate, onSelect, onClose }) {
   const year = viewDate.getFullYear()
   const month = viewDate.getMonth()
 
-  const monthName = viewDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })
+  const monthName = viewDate.toLocaleDateString(locale, { month: 'long', year: 'numeric' })
 
   const daysInMonth = new Date(year, month + 1, 0).getDate()
   const firstDayOfWeek = new Date(year, month, 1).getDay()
@@ -182,6 +189,8 @@ function MiniCalendar({ selected, minDate, onSelect, onClose }) {
   const days = []
   for (let i = 0; i < firstDayOfWeek; i++) days.push(null)
   for (let i = 1; i <= daysInMonth; i++) days.push(i)
+
+  const weekdays = t('calendar.weekdays', { returnObjects: true })
 
   function isDisabled(day) {
     const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`
@@ -232,7 +241,7 @@ function MiniCalendar({ selected, minDate, onSelect, onClose }) {
 
       {/* Day headers */}
       <div className="grid grid-cols-7 gap-1 mb-1">
-        {['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'].map(d => (
+        {weekdays.map(d => (
           <div key={d} className="text-xs text-text-muted text-center py-1 font-medium">
             {d}
           </div>
@@ -271,7 +280,7 @@ function MiniCalendar({ selected, minDate, onSelect, onClose }) {
         onClick={onClose}
         className="w-full mt-3 py-2 text-xs text-text-muted hover:text-text-heading transition-colors"
       >
-        Close
+        {t('form.dates.close')}
       </button>
     </div>
   )

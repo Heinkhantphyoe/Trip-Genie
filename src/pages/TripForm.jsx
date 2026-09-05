@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { MapPin, Calendar, Users2, Wallet, Sparkles, ArrowRight, ArrowLeft } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { useTrip } from '../context/TripContext'
 import Container from '../components/layout/Container'
 import Button from '../components/ui/Button'
@@ -13,16 +14,11 @@ import InterestPicker from '../components/trip/InterestPicker'
 
 const STEP_ICONS = [MapPin, Calendar, Users2, Wallet, Sparkles]
 
-const STEPS = [
-  { id: 1, title: 'Destination' },
-  { id: 2, title: 'Dates' },
-  { id: 3, title: 'Travelers' },
-  { id: 4, title: 'Budget' },
-  { id: 5, title: 'Interests' },
-]
+const STEP_KEYS = ['destination', 'dates', 'travelers', 'budget', 'interests']
 
 export default function TripForm() {
   const navigate = useNavigate()
+  const { t } = useTranslation()
   const { state, dispatch } = useTrip()
   const [step, setStep] = useState(1)
   const StepIcon = STEP_ICONS[step - 1]
@@ -58,8 +54,8 @@ export default function TripForm() {
           <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-accent text-white mb-4">
             <StepIcon className="w-6 h-6" strokeWidth={1.5} />
           </div>
-          <h1 className="text-3xl font-bold text-text-heading mb-2">Plan Your Trip</h1>
-          <p className="text-text-muted">Step {step} of 5 — {STEPS[step - 1].title}</p>
+          <h1 className="text-3xl font-bold text-text-heading mb-2">{t('form.title')}</h1>
+          <p className="text-text-muted">{t('form.stepOf', { step })} — {t(`form.steps.${STEP_KEYS[step - 1]}`)}</p>
         </div>
 
         {/* Progress */}
@@ -67,26 +63,27 @@ export default function TripForm() {
 
         {/* Step indicators */}
         <div className="flex justify-between mb-8">
-          {STEPS.map(s => {
-            const Icon = STEP_ICONS[s.id - 1]
+          {STEP_KEYS.map((key, i) => {
+            const sId = i + 1
+            const Icon = STEP_ICONS[i]
             return (
               <div
-                key={s.id}
+                key={sId}
                 className={`flex flex-col items-center gap-1.5 transition-all duration-300 ${
-                  s.id === step ? 'scale-110' : s.id < step ? 'opacity-70' : 'opacity-40'
+                  sId === step ? 'scale-110' : sId < step ? 'opacity-70' : 'opacity-40'
                 }`}
               >
                 <div className={`
                   w-10 h-10 rounded-full flex items-center justify-center
                   transition-all duration-300
-                  ${s.id === step
+                  ${sId === step
                     ? 'bg-gradient-to-br from-primary to-accent text-white shadow-md'
-                    : s.id < step
+                    : sId < step
                       ? 'bg-success text-white'
                       : 'bg-surface-alt text-text-muted border border-border'
                   }
                 `}>
-                  {s.id < step ? (
+                  {sId < step ? (
                     <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                       <polyline points="20 6 9 17 4 12" />
                     </svg>
@@ -95,9 +92,9 @@ export default function TripForm() {
                   )}
                 </div>
                 <span className={`text-xs font-medium hidden sm:block ${
-                  s.id === step ? 'text-primary font-semibold' : 'text-text-muted'
+                  sId === step ? 'text-primary font-semibold' : 'text-text-muted'
                 }`}>
-                  {s.title}
+                  {t(`form.steps.${key}`)}
                 </span>
               </div>
             )
@@ -109,14 +106,14 @@ export default function TripForm() {
           {step === 1 && (
             <div className="space-y-6">
               <DestinationSearch
-                label="Where are you traveling from?"
-                placeholder="Search your departure city..."
+                label={t('form.destination.departureLabel')}
+                placeholder={t('form.destination.departurePlaceholder')}
                 value={state.departureCity}
                 onChange={d => dispatch({ type: 'SET_DEPARTURE', payload: d })}
               />
               <DestinationSearch
-                label="Where do you want to go?"
-                placeholder="Search for a destination..."
+                label={t('form.destination.destinationLabel')}
+                placeholder={t('form.destination.destinationPlaceholder')}
                 value={state.destination}
                 onChange={d => dispatch({ type: 'SET_DESTINATION', payload: d })}
               />
@@ -166,7 +163,7 @@ export default function TripForm() {
             disabled={step === 1}
           >
             <ArrowLeft className="w-4 h-4" />
-            Back
+            {t('form.back')}
           </Button>
           <Button
             onClick={handleNext}
@@ -175,12 +172,12 @@ export default function TripForm() {
           >
             {step === 5 ? (
               <>
-                Generate Trip Plan
+                {t('form.generate')}
                 <Sparkles className="w-4 h-4" />
               </>
             ) : (
               <>
-                Next
+                {t('form.next')}
                 <ArrowRight className="w-4 h-4" />
               </>
             )}

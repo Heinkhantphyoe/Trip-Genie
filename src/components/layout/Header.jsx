@@ -1,11 +1,14 @@
 import { Link, useLocation } from 'react-router-dom'
 import { MapPin, Compass } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import Container from './Container'
 import ThemeToggle from '../ui/ThemeToggle'
+import LanguageToggle from '../ui/LanguageToggle'
 
 export default function Header() {
   const location = useLocation()
   const isLanding = location.pathname === '/'
+  const { t } = useTranslation()
 
   return (
     <header className="sticky top-0 z-50 bg-surface/80 backdrop-blur-lg border-b border-border">
@@ -20,13 +23,14 @@ export default function Header() {
           </Link>
 
           <div className="flex items-center gap-2">
+            <LanguageToggle />
             <ThemeToggle />
             {!isLanding && (
               <Link
                 to="/"
                 className="text-sm font-medium text-text-muted hover:text-primary transition-colors no-underline"
               >
-                Start Over
+                {t('header.startOver')}
               </Link>
             )}
           </div>

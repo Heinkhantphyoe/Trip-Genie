@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { useTrip } from '../context/TripContext'
 import { useTripPlanner } from '../hooks/useTripPlanner'
 import { LayoutDashboard, Plane, Building2, Map, Wallet, Lightbulb, ArrowLeft, RotateCcw, Frown } from 'lucide-react'
@@ -14,20 +15,21 @@ import ItineraryTab from '../components/trip/ItineraryTab'
 import BudgetTab from '../components/trip/BudgetTab'
 import TipsTab from '../components/trip/TipsTab'
 
-const TABS = [
-  { id: 'overview', label: 'Overview', icon: LayoutDashboard },
-  { id: 'flights', label: 'Flights', icon: Plane },
-  { id: 'hotels', label: 'Hotels', icon: Building2 },
-  { id: 'itinerary', label: 'Itinerary', icon: Map },
-  { id: 'budget', label: 'Budget', icon: Wallet },
-  { id: 'tips', label: 'Tips', icon: Lightbulb },
-]
-
 export default function Results() {
   const navigate = useNavigate()
+  const { t } = useTranslation()
   const { state } = useTrip()
   const { loading, error, progress, loadingMessage, results, planTrip } = useTripPlanner()
   const [activeTab, setActiveTab] = useState('overview')
+
+  const TABS = [
+    { id: 'overview', label: t('results.tabs.overview'), icon: LayoutDashboard },
+    { id: 'flights', label: t('results.tabs.flights'), icon: Plane },
+    { id: 'hotels', label: t('results.tabs.hotels'), icon: Building2 },
+    { id: 'itinerary', label: t('results.tabs.itinerary'), icon: Map },
+    { id: 'budget', label: t('results.tabs.budget'), icon: Wallet },
+    { id: 'tips', label: t('results.tabs.tips'), icon: Lightbulb },
+  ]
 
   useEffect(() => {
     if (!state.departureCity || !state.destination) {
@@ -46,10 +48,10 @@ export default function Results() {
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary/10 text-primary mb-6">
             <Map className="w-8 h-8 animate-float" strokeWidth={1.5} />
           </div>
-          <h2 className="text-2xl font-bold text-text-heading mb-2">Planning your trip...</h2>
+          <h2 className="text-2xl font-bold text-text-heading mb-2">{t('results.loading')}</h2>
           <p className="text-text-muted mb-8">{loadingMessage}</p>
           <ProgressBar value={progress} max={100} showLabel size="md" />
-          <p className="text-sm text-text-muted mt-4">{progress}% complete</p>
+          <p className="text-sm text-text-muted mt-4">{t('results.progress', { progress })}</p>
         </div>
       </Container>
     )
@@ -63,18 +65,18 @@ export default function Results() {
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-danger/10 text-danger mb-6">
             <Frown className="w-8 h-8" strokeWidth={1.5} />
           </div>
-          <h2 className="text-2xl font-bold text-text-heading mb-2">Something went wrong</h2>
+          <h2 className="text-2xl font-bold text-text-heading mb-2">{t('results.error.title')}</h2>
           <p className="text-text-muted mb-8">
-            Our service is temporarily unavailable. Please try again in a few minutes.
+            {t('results.error.message')}
           </p>
           <div className="flex gap-4 justify-center">
             <Button variant="secondary" onClick={() => navigate('/plan')}>
               <ArrowLeft className="w-4 h-4" />
-              Modify Trip
+              {t('results.error.modifyTrip')}
             </Button>
             <Button onClick={() => planTrip(state)}>
               <RotateCcw className="w-4 h-4" />
-              Try Again
+              {t('results.error.tryAgain')}
             </Button>
           </div>
         </div>
@@ -121,9 +123,9 @@ export default function Results() {
       <div className="flex justify-center gap-4 mt-8 pt-6 border-t border-border">
         <Button variant="secondary" onClick={() => navigate('/plan')}>
           <ArrowLeft className="w-4 h-4" />
-          Modify Trip
+          {t('results.modifyTrip')}
         </Button>
-        <Button variant="ghost" onClick={() => navigate('/')}>Start Over</Button>
+        <Button variant="ghost" onClick={() => navigate('/')}>{t('results.startOver')}</Button>
       </div>
     </Container>
   )

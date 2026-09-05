@@ -1,8 +1,12 @@
 import { useState, useEffect, useRef, useMemo } from 'react'
 import { Search, MapPin } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { searchCitiesOffline } from '../../services/cities'
 
-export default function DestinationSearch({ value, onChange, label = 'Where do you want to go?', placeholder = 'Search for a city...' }) {
+export default function DestinationSearch({ value, onChange, label, placeholder }) {
+  const { t } = useTranslation()
+  const resolvedLabel = label || t('form.destination.destinationLabel')
+  const resolvedPlaceholder = placeholder || t('form.destination.destinationPlaceholder')
   const [query, setQuery] = useState(value?.city || '')
   const [open, setOpen] = useState(false)
   const wrapperRef = useRef(null)
@@ -37,7 +41,7 @@ export default function DestinationSearch({ value, onChange, label = 'Where do y
   return (
     <div ref={wrapperRef} className="relative">
       <label className="block text-sm font-medium text-text-heading mb-1.5">
-        {label}
+        {resolvedLabel}
       </label>
       <div className="relative">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-text-muted" strokeWidth={1.5} />
@@ -46,7 +50,7 @@ export default function DestinationSearch({ value, onChange, label = 'Where do y
           value={query}
           onChange={handleChange}
           onFocus={() => setOpen(true)}
-          placeholder={placeholder}
+          placeholder={resolvedPlaceholder}
           className="w-full pl-10 pr-4 py-3 rounded-lg border border-border bg-surface text-text
             placeholder:text-text-muted transition-all duration-200
             focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary text-lg"
@@ -75,7 +79,7 @@ export default function DestinationSearch({ value, onChange, label = 'Where do y
 
       {open && query.length >= 1 && results.length === 0 && (
         <div className="absolute z-50 w-full mt-1 bg-surface-raised border border-border rounded-lg shadow-lg p-4">
-          <p className="text-text-muted text-sm text-center">No cities found. Try a different name.</p>
+          <p className="text-text-muted text-sm text-center">{t('form.destination.noResults')}</p>
         </div>
       )}
     </div>

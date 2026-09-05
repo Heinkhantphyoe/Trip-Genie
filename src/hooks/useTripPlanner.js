@@ -1,9 +1,11 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { planFullTrip } from '../services/gemini'
 import { getDestinationPhoto } from '../services/unsplash'
 import { getWeatherForecast } from '../services/openMeteo'
 
 export function useTripPlanner() {
+  const { i18n } = useTranslation()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const [progress, setProgress] = useState(0)
@@ -12,6 +14,7 @@ export function useTripPlanner() {
 
   async function planTrip(tripData) {
     const { departureCity, destination, startDate, endDate, adults, children, budgetLevel, interests, travelStyle } = tripData
+    const language = i18n.language?.split('-')[0] || 'en'
 
     setLoading(true)
     setError(null)
@@ -20,7 +23,7 @@ export function useTripPlanner() {
 
     try {
       // Step 1: Call Gemini once for everything (60% of progress)
-      setLoadingMessage('✨ Planning your perfect trip with AI...')
+      setLoadingMessage(i18n.t('loading.planning'))
       setProgress(10)
 
       const geminiData = await planFullTrip({
@@ -35,10 +38,11 @@ export function useTripPlanner() {
         budgetLevel,
         interests,
         travelStyle,
+        language,
       })
 
       setProgress(60)
-      setLoadingMessage('🌤️ Fetching weather & photos...')
+      setLoadingMessage(i18n.t('loading.weather'))
 
       // Step 2: Fetch weather + photo in parallel (40% of progress)
       const nightsCount = Math.ceil((new Date(endDate) - new Date(startDate)) / (1000 * 60 * 60 * 24))
@@ -49,7 +53,7 @@ export function useTripPlanner() {
       ])
 
       setProgress(100)
-      setLoadingMessage('✅ Done!')
+      setLoadingMessage(i18n.t('loading.done'))
 
       // Calculate budget from Gemini data
       const budget = calculateBudget(geminiData, nightsCount, adults)

@@ -1,5 +1,5 @@
-export function formatCurrency(amount, currency = 'USD') {
-  return new Intl.NumberFormat('en-US', {
+export function formatCurrency(amount, locale = 'en-US', currency = 'USD') {
+  return new Intl.NumberFormat(locale, {
     style: 'currency',
     currency,
     minimumFractionDigits: 0,
@@ -7,16 +7,16 @@ export function formatCurrency(amount, currency = 'USD') {
   }).format(amount)
 }
 
-export function formatDate(date) {
-  return new Intl.DateTimeFormat('en-US', {
+export function formatDate(date, locale = 'en-US') {
+  return new Intl.DateTimeFormat(locale, {
     month: 'short',
     day: 'numeric',
     year: 'numeric',
   }).format(new Date(date))
 }
 
-export function formatDateShort(date) {
-  return new Intl.DateTimeFormat('en-US', {
+export function formatDateShort(date, locale = 'en-US') {
+  return new Intl.DateTimeFormat(locale, {
     month: 'short',
     day: 'numeric',
   }).format(new Date(date))
@@ -29,6 +29,6 @@ export function formatDuration(hours) {
   return m > 0 ? `${h}h ${m}m` : `${h}h`
 }
 
-export function formatNumber(num) {
-  return new Intl.NumberFormat('en-US').format(num)
+export function formatNumber(num, locale = 'en-US') {
+  return new Intl.NumberFormat(locale).format(num)
 }

@@ -1,0 +1,247 @@
+{
+  "landing": {
+    "hero": {
+      "title": "Plan your perfect trip",
+      "subtitle": "in minutes",
+      "description": "Tell us where you want to go, your budget, and travel style. TripGenie finds real flights, hotels, and builds a day-by-day itinerary for you.",
+      "cta": "Plan My Trip"
+    },
+    "features": {
+      "title": "Everything you need to travel smarter",
+      "flights": { "title": "Real Flights", "desc": "Compare actual flight options and prices" },
+      "hotels": { "title": "Hotels", "desc": "Find the perfect stay for your budget" },
+      "itinerary": { "title": "Smart Itinerary", "desc": "Day-by-day plans optimized by location" },
+      "budget": { "title": "Budget Tracking", "desc": "Detailed cost breakdown with savings tips" }
+    },
+    "cta": {
+      "title": "Ready to go?",
+      "description": "No sign-up. No fees. Just tell us your dream destination.",
+      "button": "Start Planning"
+    }
+  },
+  "form": {
+    "title": "Plan Your Trip",
+    "stepOf": "Step {{step}} of 5",
+    "steps": {
+      "destination": "Destination",
+      "dates": "Dates",
+      "travelers": "Travelers",
+      "budget": "Budget",
+      "interests": "Interests"
+    },
+    "back": "Back",
+    "next": "Next",
+    "generate": "Generate Trip Plan",
+    "destination": {
+      "departureLabel": "Where are you traveling from?",
+      "departurePlaceholder": "Search your departure city...",
+      "destinationLabel": "Where do you want to go?",
+      "destinationPlaceholder": "Search for a destination...",
+      "noResults": "No cities found. Try a different name."
+    },
+    "dates": {
+      "label": "When are you traveling?",
+      "departure": "Departure",
+      "return": "Return",
+      "pickDate": "Pick a date",
+      "duration": "{{nights}} night(s) · {{days}} day(s)",
+      "close": "Close",
+      "quickDurations": {
+        "weekend": "Weekend",
+        "threeDays": "3 Days",
+        "oneWeek": "1 Week",
+        "twoWeeks": "2 Weeks"
+      }
+    },
+    "travelers": {
+      "label": "Who's traveling?",
+      "adults": "Adults",
+      "children": "Children",
+      "summary": "{{adults}} adult(s){{childrenText}}",
+      "childrenSuffix": ", {{count}} child(ren)"
+    },
+    "budget": {
+      "label": "What's your budget?"
+    },
+    "interests": {
+      "travelStyle": "Travel style",
+      "label": "What interests you?",
+      "hint": "(pick as many as you like)"
+    }
+  },
+  "results": {
+    "tabs": {
+      "overview": "Overview",
+      "flights": "Flights",
+      "hotels": "Hotels",
+      "itinerary": "Itinerary",
+      "budget": "Budget",
+      "tips": "Tips"
+    },
+    "loading": "Planning your trip...",
+    "progress": "{{progress}}% complete",
+    "error": {
+      "title": "Something went wrong",
+      "message": "Our service is temporarily unavailable. Please try again in a few minutes.",
+      "modifyTrip": "Modify Trip",
+      "tryAgain": "Try Again"
+    },
+    "modifyTrip": "Modify Trip",
+    "startOver": "Start Over"
+  },
+  "header": {
+    "startOver": "Start Over"
+  },
+  "footer": {
+    "tagline": "AI-powered travel planning. No sign-up required."
+  },
+  "overview": {
+    "stats": {
+      "flightsFound": "Flights Found",
+      "hotelsFound": "Hotels Found",
+      "attractions": "Attractions",
+      "nights": "Nights"
+    },
+    "summary": {
+      "title": "Trip Summary",
+      "destination": "Destination",
+      "dates": "Dates",
+      "travelers": "Travelers",
+      "budget": "Budget",
+      "style": "Style",
+      "estimatedTotal": "Estimated Total",
+      "interests": "Interests:"
+    },
+    "weather": "Weather Forecast",
+    "adults": "{{count}} adults",
+    "children": "{{count}} children"
+  },
+  "flights": {
+    "noResults": "No flights found",
+    "noResultsHint": "Try adjusting your dates or destination.",
+    "found": "{{count}} flights found",
+    "sortedByPrice": "Sorted by price",
+    "depart": "Depart",
+    "arrive": "Arrive",
+    "perPerson": "per person",
+    "direct": "Direct",
+    "stops": "{{count}} stop(s)"
+  },
+  "hotels": {
+    "noResults": "No hotels found",
+    "noResultsHint": "Try adjusting your dates or destination.",
+    "found": "{{count}} hotels found",
+    "perNight": "per night",
+    "totalNights": "total ({{count}} nights)"
+  },
+  "itinerary": {
+    "noResults": "No itinerary generated",
+    "noResultsHint": "Try modifying your trip preferences.",
+    "day": "Day {{day}}",
+    "meals": "MEALS",
+    "estimatedPerDay": "Est. {{amount}}/day"
+  },
+  "budget": {
+    "noData": "No budget data",
+    "noDataHint": "Budget breakdown will appear after trip planning.",
+    "estimatedTotal": "Estimated Total",
+    "perDay": "per day",
+    "breakdown": "Cost Breakdown",
+    "categories": {
+      "flights": "Flights",
+      "accommodation": "Accommodation",
+      "activities": "Activities",
+      "food": "Food & Drink",
+      "miscellaneous": "Miscellaneous"
+    },
+    "savingsTips": "Money-Saving Tips",
+    "tips": [
+      "Book flights 2-3 months in advance for best prices",
+      "Consider staying slightly outside the city center for lower hotel rates",
+      "Eat at local restaurants instead of tourist areas",
+      "Use public transportation instead of taxis",
+      "Look for free walking tours and museum free days"
+    ]
+  },
+  "tips": {
+    "categories": {
+      "beforeYouGo": "Before You Go",
+      "arrival": "Arrival",
+      "gettingAround": "Getting Around",
+      "culture": "Culture",
+      "food": "Food & Drink",
+      "safety": "Safety",
+      "money": "Money",
+      "connectivity": "Connectivity"
+    },
+    "noResults": "No tips available",
+    "noResultsHint": "Tips will appear after trip planning.",
+    "emergencyNumbers": "Emergency Numbers",
+    "usefulPhrases": "Useful Phrases",
+    "packingList": "Packing List"
+  },
+  "weather": {
+    "clearSky": "Clear sky",
+    "mainlyClear": "Mainly clear",
+    "partlyCloudy": "Partly cloudy",
+    "overcast": "Overcast",
+    "fog": "Fog",
+    "rimeFog": "Rime fog",
+    "lightDrizzle": "Light drizzle",
+    "moderateDrizzle": "Moderate drizzle",
+    "denseDrizzle": "Dense drizzle",
+    "slightRain": "Slight rain",
+    "moderateRain": "Moderate rain",
+    "heavyRain": "Heavy rain",
+    "slightSnow": "Slight snow",
+    "moderateSnow": "Moderate snow",
+    "heavySnow": "Heavy snow",
+    "slightShowers": "Slight showers",
+    "moderateShowers": "Moderate showers",
+    "violentShowers": "Violent showers",
+    "thunderstorm": "Thunderstorm",
+    "unknown": "Unknown"
+  },
+  "constants": {
+    "styles": {
+      "relaxed": "Relaxed",
+      "balanced": "Balanced",
+      "packed": "Packed"
+    },
+    "interests": {
+      "beach": "Beach",
+      "culture": "Culture",
+      "food": "Food",
+      "adventure": "Adventure",
+      "nightlife": "Nightlife",
+      "nature": "Nature",
+      "shopping": "Shopping",
+      "history": "History"
+    },
+    "budget": {
+      "budget": "Budget",
+      "budgetDesc": "Hostels, street food, public transit",
+      "midRange": "Mid-Range",
+      "midRangeDesc": "Hotels, restaurants, some activities",
+      "luxury": "Luxury",
+      "luxuryDesc": "Resorts, fine dining, premium experiences"
+    }
+  },
+  "progress": "Progress",
+  "theme": {
+    "lightMode": "Switch to light mode",
+    "darkMode": "Switch to dark mode"
+  },
+  "language": {
+    "en": "EN",
+    "my": "MY"
+  },
+  "loading": {
+    "planning": "✨ Planning your perfect trip with AI...",
+    "weather": "🌤️ Fetching weather & photos...",
+    "done": "✅ Done!"
+  },
+  "calendar": {
+    "weekdays": ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"]
+  }
+}

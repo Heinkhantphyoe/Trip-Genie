@@ -1,4 +1,5 @@
 import { Umbrella, Scale, Zap, Landmark, UtensilsCrossed, Mountain, Moon, Leaf, ShoppingBag, Castle } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { INTERESTS, TRAVEL_STYLES } from '../../utils/constants'
 import Chip from '../ui/Chip'
 
@@ -10,6 +11,8 @@ const INTEREST_ICONS = {
 }
 
 export default function InterestPicker({ interests, style, onInterestsChange, onStyleChange }) {
+  const { t } = useTranslation()
+
   function toggleInterest(id) {
     onInterestsChange(
       interests.includes(id)
@@ -23,7 +26,7 @@ export default function InterestPicker({ interests, style, onInterestsChange, on
       {/* Travel Style */}
       <div>
         <label className="block text-sm font-medium text-text-heading mb-3">
-          Travel style
+          {t('form.interests.travelStyle')}
         </label>
         <div className="grid grid-cols-3 gap-3">
           {TRAVEL_STYLES.map(s => {
@@ -44,7 +47,7 @@ export default function InterestPicker({ interests, style, onInterestsChange, on
               >
                 <Icon className={`w-6 h-6 mx-auto mb-1 ${style === s.id ? 'text-primary' : 'text-text-muted'}`} strokeWidth={1.5} />
                 <span className={`text-sm font-semibold ${style === s.id ? 'text-primary' : 'text-text-heading'}`}>
-                  {s.label}
+                  {t(`constants.styles.${s.id}`)}
                 </span>
               </button>
             )
@@ -55,7 +58,7 @@ export default function InterestPicker({ interests, style, onInterestsChange, on
       {/* Interests */}
       <div>
         <label className="block text-sm font-medium text-text-heading mb-3">
-          What interests you? <span className="text-text-muted font-normal">(pick as many as you like)</span>
+          {t('form.interests.label')} <span className="text-text-muted font-normal">{t('form.interests.hint')}</span>
         </label>
         <div className="flex flex-wrap gap-2">
           {INTERESTS.map(interest => {
@@ -63,7 +66,7 @@ export default function InterestPicker({ interests, style, onInterestsChange, on
             return (
               <Chip
                 key={interest.id}
-                label={interest.label}
+                label={t(`constants.interests.${interest.id}`)}
                 icon={Icon}
                 selected={interests.includes(interest.id)}
                 onClick={() => toggleInterest(interest.id)}

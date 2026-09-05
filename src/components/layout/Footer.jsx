@@ -1,7 +1,10 @@
 import { MapPin } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import Container from './Container'
 
 export default function Footer() {
+  const { t } = useTranslation()
+
   return (
     <footer className="border-t border-border bg-surface-alt mt-auto">
       <Container>
@@ -11,7 +14,7 @@ export default function Footer() {
             <span className="text-sm font-semibold text-text-heading">TripGenie</span>
           </div>
           <p className="text-sm text-text-muted">
-            AI-powered travel planning. No sign-up required.
+            {t('footer.tagline')}
           </p>
         </div>
       </Container>

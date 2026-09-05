@@ -173,9 +173,13 @@ async function callWithFallback(prompt) {
 
 // ─── Trip Planning (public API) ───
 
-export async function planFullTrip({ departureCity, departureCountry, destination, country, startDate, endDate, adults, children, budgetLevel, interests, travelStyle }) {
+export async function planFullTrip({ departureCity, departureCountry, destination, country, startDate, endDate, adults, children, budgetLevel, interests, travelStyle, language = 'en' }) {
   const nights = Math.ceil((new Date(endDate) - new Date(startDate)) / (1000 * 60 * 60 * 24))
   const days = nights + 1
+
+  const languageInstruction = language === 'my'
+    ? '\n\nIMPORTANT: Return ALL text content (titles, descriptions, tips, meal suggestions, transit notes, packing list items, useful phrases, etc.) in Burmese (Myanmar language). Keep proper nouns (city names, airline names, hotel names) in their original form. For usefulPhrases, provide Burmese translations with English in parentheses for pronunciation.'
+    : ''
 
   const prompt = `You are a travel planning expert. Plan a complete trip from ${departureCity}, ${departureCountry} to ${destination}, ${country}.
 
@@ -311,7 +315,7 @@ Rules:
 - 5-8 useful phrases in the local language
 - 8-12 packing list items for the destination
 - All prices in USD
-- Return ONLY the JSON object, no other text`
+- Return ONLY the JSON object, no other text${languageInstruction}`
 
   return callWithFallback(prompt)
 }

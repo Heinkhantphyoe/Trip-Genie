@@ -1,17 +1,21 @@
 import { useNavigate } from 'react-router-dom'
 import { Plane, Building2, MapPin, Wallet, ArrowRight, Sparkles } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import Button from '../components/ui/Button'
 import Container from '../components/layout/Container'
+import { isBurmese } from '../utils/locale'
 
-const FEATURES = [
-  { icon: Plane, title: 'Real Flights', desc: 'Compare actual flight options and prices' },
-  { icon: Building2, title: 'Hotels', desc: 'Find the perfect stay for your budget' },
-  { icon: MapPin, title: 'Smart Itinerary', desc: 'Day-by-day plans optimized by location' },
-  { icon: Wallet, title: 'Budget Tracking', desc: 'Detailed cost breakdown with savings tips' },
+const FEATURE_KEYS = [
+  { icon: Plane, titleKey: 'landing.features.flights.title', descKey: 'landing.features.flights.desc' },
+  { icon: Building2, titleKey: 'landing.features.hotels.title', descKey: 'landing.features.hotels.desc' },
+  { icon: MapPin, titleKey: 'landing.features.itinerary.title', descKey: 'landing.features.itinerary.desc' },
+  { icon: Wallet, titleKey: 'landing.features.budget.title', descKey: 'landing.features.budget.desc' },
 ]
 
 export default function Landing() {
   const navigate = useNavigate()
+  const { t } = useTranslation()
+  const burmese = isBurmese()
 
   return (
     <div className="flex flex-col min-h-[calc(100vh-64px)]">
@@ -37,19 +41,24 @@ export default function Landing() {
             <div className="inline-flex items-center justify-center w-16 h-16 mb-6 rounded-2xl bg-primary/10 text-primary animate-float">
               <MapPin className="w-8 h-8" strokeWidth={1.5} />
             </div>
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-text-heading mb-6 tracking-tight">
-              Plan your perfect trip
-              <br />
+            <h1
+              className={`text-5xl sm:text-6xl lg:text-7xl font-bold text-text-heading mb-6 tracking-tight ${
+                burmese ? 'leading-relaxed' : ''
+              }`}
+            >
+              {t('landing.hero.title')}{' '}
+              {burmese ? null : <br/>}
               <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                in minutes
+                {t('landing.hero.subtitle')}
               </span>
             </h1>
-            <p className="text-lg sm:text-xl text-text-muted max-w-2xl mx-auto mb-10">
-              Tell us where you want to go, your budget, and travel style.
-              TripGenie finds real flights, hotels, and builds a day-by-day itinerary for you.
+            <p className={`text-lg sm:text-xl text-text-muted max-w-2xl mx-auto mb-10 ${
+              burmese ? 'leading-relaxed' : ''
+            }`}>
+              {t('landing.hero.description')}
             </p>
             <Button size="lg" onClick={() => navigate('/plan')}>
-              Plan My Trip
+              {t('landing.hero.cta')}
               <ArrowRight className="w-5 h-5" />
             </Button>
           </div>
@@ -60,12 +69,12 @@ export default function Landing() {
       <section className="bg-surface-alt border-t border-border">
         <Container className="py-20">
           <h2 className="text-2xl sm:text-3xl font-bold text-text-heading text-center mb-12">
-            Everything you need to travel smarter
+            {t('landing.features.title')}
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {FEATURES.map((f, i) => (
+            {FEATURE_KEYS.map((f, i) => (
               <div
-                key={f.title}
+                key={f.titleKey}
                 className="bg-surface-raised rounded-xl p-6 border border-border
                   transition-all duration-200 hover:shadow-md hover:scale-[1.02] group"
                 style={{ animationDelay: `${i * 100}ms` }}
@@ -73,8 +82,8 @@ export default function Landing() {
                 <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 text-primary group-hover:bg-primary group-hover:text-white transition-all duration-200">
                   <f.icon className="w-6 h-6" strokeWidth={1.5} />
                 </div>
-                <h3 className="text-lg font-semibold text-text-heading mb-2">{f.title}</h3>
-                <p className="text-sm text-text-muted">{f.desc}</p>
+                <h3 className="text-lg font-semibold text-text-heading mb-2">{t(f.titleKey)}</h3>
+                <p className="text-sm text-text-muted">{t(f.descKey)}</p>
               </div>
             ))}
           </div>
@@ -86,10 +95,10 @@ export default function Landing() {
         <Container className="py-16 text-center">
           <div className="max-w-lg mx-auto">
             <Sparkles className="w-10 h-10 text-accent mx-auto mb-4" strokeWidth={1.5} />
-            <h2 className="text-2xl font-bold text-text-heading mb-4">Ready to go?</h2>
-            <p className="text-text-muted mb-8">No sign-up. No fees. Just tell us your dream destination.</p>
+            <h2 className="text-2xl font-bold text-text-heading mb-4">{t('landing.cta.title')}</h2>
+            <p className="text-text-muted mb-8">{t('landing.cta.description')}</p>
             <Button size="lg" onClick={() => navigate('/plan')}>
-              Start Planning
+              {t('landing.cta.button')}
               <ArrowRight className="w-5 h-5" />
             </Button>
           </div>

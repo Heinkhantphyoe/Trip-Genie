@@ -1,17 +1,21 @@
 import { Plane, Frown } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import Card from '../ui/Card'
 import Badge from '../ui/Badge'
 import { formatCurrency } from '../../utils/format'
 
 export default function FlightsTab({ flights }) {
+  const { t, i18n } = useTranslation()
+  const locale = i18n.language?.split('-')[0] === 'my' ? 'my' : 'en-US'
+
   if (!flights || flights.length === 0) {
     return (
       <div className="text-center py-12">
         <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-primary/10 text-primary mb-4">
           <Frown className="w-7 h-7" strokeWidth={1.5} />
         </div>
-        <h3 className="text-lg font-semibold text-text-heading mb-2">No flights found</h3>
-        <p className="text-text-muted">Try adjusting your dates or destination.</p>
+        <h3 className="text-lg font-semibold text-text-heading mb-2">{t('flights.noResults')}</h3>
+        <p className="text-text-muted">{t('flights.noResultsHint')}</p>
       </div>
     )
   }
@@ -19,8 +23,8 @@ export default function FlightsTab({ flights }) {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between mb-2">
-        <h3 className="text-lg font-semibold text-text-heading">{flights.length} flights found</h3>
-        <Badge variant="primary">Sorted by price</Badge>
+        <h3 className="text-lg font-semibold text-text-heading">{t('flights.found', { count: flights.length })}</h3>
+        <Badge variant="primary">{t('flights.sortedByPrice')}</Badge>
       </div>
 
       {[...flights].sort((a, b) => a.price - b.price).map((flight, i) => (
@@ -37,7 +41,7 @@ export default function FlightsTab({ flights }) {
               <div className="flex items-center gap-4 text-sm">
                 <div>
                   <p className="font-semibold text-text-heading">{flight.departure}</p>
-                  <p className="text-text-muted text-xs">Depart</p>
+                  <p className="text-text-muted text-xs">{t('flights.depart')}</p>
                 </div>
                 <div className="flex-1 flex items-center gap-2">
                   <div className="h-px flex-1 bg-border" />
@@ -46,20 +50,20 @@ export default function FlightsTab({ flights }) {
                 </div>
                 <div>
                   <p className="font-semibold text-text-heading">{flight.arrival}</p>
-                  <p className="text-text-muted text-xs">Arrive</p>
+                  <p className="text-text-muted text-xs">{t('flights.arrive')}</p>
                 </div>
               </div>
             </div>
 
             {/* Price + stops */}
             <div className="text-right sm:text-center sm:min-w-[120px]">
-              <p className="text-2xl font-bold text-primary">{formatCurrency(flight.price)}</p>
-              <p className="text-xs text-text-muted">per person</p>
+              <p className="text-2xl font-bold text-primary">{formatCurrency(flight.price, locale)}</p>
+              <p className="text-xs text-text-muted">{t('flights.perPerson')}</p>
               <Badge
                 variant={flight.stops === 0 ? 'success' : 'warning'}
                 size="sm"
               >
-                {flight.stops === 0 ? 'Direct' : `${flight.stops} stop${flight.stops > 1 ? 's' : ''}`}
+                {flight.stops === 0 ? t('flights.direct') : t('flights.stops', { count: flight.stops })}
               </Badge>
             </div>
           </div>

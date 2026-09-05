@@ -16,12 +16,16 @@
     <meta name="description" content="TripGenie — AI-powered travel planner. Find real flights, hotels, and build day-by-day itineraries." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Myanmar:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <title>TripGenie — AI Travel Planner</title>
     <script>
       (function() {
         if (localStorage.getItem('tripgenie-theme') === 'dark') {
           document.documentElement.classList.add('dark');
+        }
+        var lang = localStorage.getItem('tripgenie-lang');
+        if (lang === 'my' || lang === 'en') {
+          document.documentElement.lang = lang;
         }
       })();
     </script>

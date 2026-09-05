@@ -1,4 +1,5 @@
 import { User, Baby, Users2 } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 
 function Counter({ label, icon: Icon, value, min = 0, max = 20, onChange }) {
   return (
@@ -37,14 +38,17 @@ function Counter({ label, icon: Icon, value, min = 0, max = 20, onChange }) {
 }
 
 export default function TravelerSelector({ adults, children, onAdultsChange, onChildrenChange }) {
+  const { t } = useTranslation()
+  const childrenText = children > 0 ? t('form.travelers.childrenSuffix', { count: children }) : ''
+
   return (
     <div>
       <label className="block text-sm font-medium text-text-heading mb-3">
-        Who's traveling?
+        {t('form.travelers.label')}
       </label>
       <div className="space-y-3">
         <Counter
-          label="Adults"
+          label={t('form.travelers.adults')}
           icon={User}
           value={adults}
           min={1}
@@ -52,7 +56,7 @@ export default function TravelerSelector({ adults, children, onAdultsChange, onC
           onChange={onAdultsChange}
         />
         <Counter
-          label="Children"
+          label={t('form.travelers.children')}
           icon={Baby}
           value={children}
           min={0}
@@ -62,7 +66,7 @@ export default function TravelerSelector({ adults, children, onAdultsChange, onC
       </div>
       <p className="flex items-center gap-1.5 text-sm text-text-muted mt-2">
         <Users2 className="w-4 h-4" strokeWidth={1.5} />
-        {adults} {adults === 1 ? 'adult' : 'adults'}{children > 0 ? `, ${children} ${children === 1 ? 'child' : 'children'}` : ''}
+        {t('form.travelers.summary', { adults, childrenText })}
       </p>
     </div>
   )

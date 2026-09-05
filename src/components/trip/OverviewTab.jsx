@@ -1,18 +1,22 @@
 import { Plane, Building2, MapPin, Moon, CalendarDays, Users2, Wallet, Sparkles, DollarSign, CloudSun, Sun, CloudFog, CloudRain, CloudSnow, CloudLightning } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import Card from '../ui/Card'
 import Badge from '../ui/Badge'
 import { formatCurrency } from '../../utils/format'
 
 export default function OverviewTab({ results }) {
+  const { t, i18n } = useTranslation()
   const { destination, dates, travelers, budget, flights, hotels, itinerary, weather, interests } = results
+
+  const locale = i18n.language?.split('-')[0] === 'my' ? 'my' : 'en-US'
 
   const nightsCount = Math.ceil((new Date(dates.end) - new Date(dates.start)) / (1000 * 60 * 60 * 24))
 
   const stats = [
-    { icon: Plane, label: 'Flights Found', value: flights.length },
-    { icon: Building2, label: 'Hotels Found', value: hotels.length },
-    { icon: MapPin, label: 'Attractions', value: itinerary.reduce((sum, d) => sum + d.activities.length, 0) },
-    { icon: Moon, label: 'Nights', value: nightsCount },
+    { icon: Plane, label: t('overview.stats.flightsFound'), value: flights.length },
+    { icon: Building2, label: t('overview.stats.hotelsFound'), value: hotels.length },
+    { icon: MapPin, label: t('overview.stats.attractions'), value: itinerary.reduce((sum, d) => sum + d.activities.length, 0) },
+    { icon: Moon, label: t('overview.stats.nights'), value: nightsCount },
   ]
 
   return (
@@ -35,26 +39,26 @@ export default function OverviewTab({ results }) {
 
       {/* Trip Summary */}
       <Card padding="lg">
-        <h3 className="text-lg font-semibold text-text-heading mb-4">Trip Summary</h3>
+        <h3 className="text-lg font-semibold text-text-heading mb-4">{t('overview.summary.title')}</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
           <div className="space-y-3">
-            <SummaryRow icon={MapPin} label="Destination" value={`${destination.city}, ${destination.country}`} />
-            <SummaryRow icon={CalendarDays} label="Dates" value={`${dates.start} → ${dates.end}`} />
-            <SummaryRow icon={Users2} label="Travelers" value={`${travelers.adults} adults${travelers.children > 0 ? `, ${travelers.children} children` : ''}`} />
+            <SummaryRow icon={MapPin} label={t('overview.summary.destination')} value={`${destination.city}, ${destination.country}`} />
+            <SummaryRow icon={CalendarDays} label={t('overview.summary.dates')} value={`${dates.start} → ${dates.end}`} />
+            <SummaryRow icon={Users2} label={t('overview.summary.travelers')} value={`${travelers.adults} ${t('overview.adults', { count: travelers.adults })}${travelers.children > 0 ? `, ${travelers.children} ${t('overview.children', { count: travelers.children })}` : ''}`} />
           </div>
           <div className="space-y-3">
-            <SummaryRow icon={Wallet} label="Budget" value={results.budgetLevel} capitalize />
-            <SummaryRow icon={Sparkles} label="Style" value={results.travelStyle} capitalize />
-            <SummaryRow icon={DollarSign} label="Estimated Total" value={formatCurrency(budget.total)} highlight />
+            <SummaryRow icon={Wallet} label={t('overview.summary.budget')} value={results.budgetLevel} capitalize />
+            <SummaryRow icon={Sparkles} label={t('overview.summary.style')} value={results.travelStyle} capitalize />
+            <SummaryRow icon={DollarSign} label={t('overview.summary.estimatedTotal')} value={formatCurrency(budget.total, locale)} highlight />
           </div>
         </div>
 
         {/* Interests */}
         {interests.length > 0 && (
           <div className="mt-4 pt-4 border-t border-border">
-            <p className="text-sm text-text-muted mb-2">Interests:</p>
+            <p className="text-sm text-text-muted mb-2">{t('overview.summary.interests')}</p>
             <div className="flex flex-wrap gap-2">
-              {interests.map(i => <Badge key={i} variant="primary">{i}</Badge>)}
+              {interests.map(i => <Badge key={i} variant="primary">{t(`constants.interests.${i}`)}</Badge>)}
             </div>
           </div>
         )}
@@ -65,12 +69,12 @@ export default function OverviewTab({ results }) {
         <Card padding="lg">
           <div className="flex items-center gap-2 mb-4">
             <CloudSun className="w-5 h-5 text-accent" strokeWidth={1.5} />
-            <h3 className="text-lg font-semibold text-text-heading">Weather Forecast</h3>
+            <h3 className="text-lg font-semibold text-text-heading">{t('overview.weather')}</h3>
           </div>
           <div className="grid grid-cols-3 sm:grid-cols-7 gap-2">
             {weather.map(day => (
               <div key={day.date} className="text-center p-2 rounded-lg bg-surface-alt">
-                <p className="text-xs text-text-muted">{new Date(day.date).toLocaleDateString('en', { weekday: 'short' })}</p>
+                <p className="text-xs text-text-muted">{new Date(day.date).toLocaleDateString(locale, { weekday: 'short' })}</p>
                 <div className="flex justify-center my-1">
                   <WeatherIcon code={day.weatherCode} />
                 </div>
