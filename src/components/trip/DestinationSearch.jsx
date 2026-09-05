@@ -1,19 +1,23 @@
-import { useState, useEffect, useRef, useMemo } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Search, MapPin } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import { searchCitiesOffline } from '../../services/cities'
+import { searchCities } from '../../services/cities'
 
 export default function DestinationSearch({ value, onChange, label, placeholder }) {
   const { t } = useTranslation()
   const resolvedLabel = label || t('form.destination.destinationLabel')
   const resolvedPlaceholder = placeholder || t('form.destination.destinationPlaceholder')
   const [query, setQuery] = useState(value?.city || '')
+  const [results, setResults] = useState([])
   const [open, setOpen] = useState(false)
   const wrapperRef = useRef(null)
 
-  const results = useMemo(() => {
-    if (query.length < 1) return []
-    return searchCitiesOffline(query)
+  useEffect(() => {
+    let cancelled = false
+    searchCities(query).then((res) => {
+      if (!cancelled) setResults(res)
+    })
+    return () => { cancelled = true }
   }, [query])
 
   useEffect(() => {
@@ -77,7 +81,7 @@ export default function DestinationSearch({ value, onChange, label, placeholder 
         </ul>
       )}
 
-      {open && query.length >= 1 && results.length === 0 && (
+      {open && query.length >= 2 && results.length === 0 && (
         <div className="absolute z-50 w-full mt-1 bg-surface-raised border border-border rounded-lg shadow-lg p-4">
           <p className="text-text-muted text-sm text-center">{t('form.destination.noResults')}</p>
         </div>

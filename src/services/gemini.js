@@ -82,19 +82,37 @@ function tryParseJSON(text) {
 
   try { return JSON.parse(json) } catch { /* try next strategy */ }
 
-  // Close unclosed brackets/braces
-  const openB = (json.match(/\[/g) || []).length
-  const closeB = (json.match(/\]/g) || []).length
-  const openC = (json.match(/\{/g) || []).length
-  const closeC = (json.match(/\}/g) || []).length
-
+  // Close unclosed brackets/braces — handle truncated responses
   let fixed = json
+
+  // Remove trailing commas before closing brackets (common in truncation)
+  fixed = fixed.replace(/,\s*$/, '')
+
+  // If truncated mid-string, close the string
+  const openStrings = (fixed.match(/(?<!\\)"/g) || []).length
+  if (openStrings % 2 !== 0) fixed += '"'
+
+  const openB = (fixed.match(/\[/g) || []).length
+  const closeB = (fixed.match(/\]/g) || []).length
+  const openC = (fixed.match(/\{/g) || []).length
+  const closeC = (fixed.match(/\}/g) || []).length
+
+  // Close in reverse nesting order: arrays first, then objects
   for (let i = 0; i < openB - closeB; i++) fixed += ']'
   for (let i = 0; i < openC - closeC; i++) fixed += '}'
 
-  try { return JSON.parse(fixed) } catch (e) {
+  try { return JSON.parse(fixed) } catch {
+    // Last resort: try to extract whatever valid top-level data we can
+    try {
+      // Find the last complete closing brace and try parsing up to it
+      const lastClose = fixed.lastIndexOf('}')
+      if (lastClose > 0) {
+        const partial = fixed.slice(0, lastClose + 1)
+        return JSON.parse(partial)
+      }
+    } catch { /* give up */ }
     console.error('JSON parse failed. Last 500 chars:', text.slice(-500))
-    throw new Error(`Invalid JSON: ${e.message}`, { cause: e })
+    throw new Error('Invalid JSON — response may have been truncated')
   }
 }
 
@@ -309,12 +327,13 @@ Return a single JSON object with ALL of the following sections:
 }
 
 Rules:
-- Return 5-8 flights, 6-8 hotels, 10-15 attractions, 5-8 restaurants
+- Return 3-5 flights, 4-6 hotels, 8-12 attractions, 4-6 restaurants
 - ${travelStyle === 'relaxed' ? '2-3 activities per day' : travelStyle === 'packed' ? '4-6 activities per day' : '3-4 activities per day'}
 - 3-5 tips per category, specific to ${destination}
 - 5-8 useful phrases in the local language
 - 8-12 packing list items for the destination
 - All prices in USD
+- Keep descriptions concise (1-2 sentences max per item)
 - Return ONLY the JSON object, no other text${languageInstruction}`
 
   return callWithFallback(prompt)
